@@ -1,4 +1,4 @@
-package com.secondlife.demo;
+package com.anonymizer;
 
 import java.io.File;
 import java.io.IOException;
