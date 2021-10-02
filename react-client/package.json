@@ -1,5 +1,5 @@
 {
-  "name": "audio-analyser",
+  "name": "anonymizer",
   "version": "0.1.0",
   "private": false,
   "scripts": {
@@ -20,7 +20,6 @@
     "chroma-js": "^2.1.2",
     "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",
-    "easy-peasy": "^3.3.1",
     "js-file-download": "^0.4.12",
     "meyda": "^5.1.8",
     "p5": "~0.9.0",
@@ -38,7 +37,8 @@
     "styled-components": "^5.1.1",
     "styled-normalize": "^8.0.7",
     "styled-system": "^5.1.5",
-    "wavesurfer.js": "^4.5.0"
+    "wavesurfer.js": "^4.5.0",
+    "zustand": "^3.5.12"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.13.12",

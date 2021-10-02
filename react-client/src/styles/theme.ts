@@ -77,7 +77,7 @@ export const COLORS = {
   gray: '#c4ccde',
   background: '#f6f4fc',
   primary: '#777DF2',
-  primaryLight: '#789CFF',
+  primaryLight: '#858af3',
   accent1: '#F22786',
   accent1Light: '#FF44DF',
   accent2: '#F2B366',

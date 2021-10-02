@@ -7,7 +7,7 @@ export const Container = styled.div<{ disabled?: boolean }>`
   min-height: 120px;
   padding: 1rem;
 
-  border: 2px dashed ${({ theme }) => theme.colors.white}90;
+  border: 2px dashed ${({ theme }) => theme.colors.gray};
   border-radius: 0.5rem;
 
   display: flex;
