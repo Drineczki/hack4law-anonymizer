@@ -1,3 +1,5 @@
 export const getRootRoute = () => '/';
 
 export const getHomeRoute = () => '/home';
+export const getDashboardRoute = () => '/dashboard';
+export const getDashboardHomeRoute = () => `${getDashboardRoute()}/home`;
