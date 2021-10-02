@@ -15,10 +15,12 @@ import {
   RiLogoutBoxLine,
   RiDownload2Line,
   RiRecordCircleLine,
-  RiSettings5Fill
+  RiSettings5Fill,
 } from 'react-icons/ri';
 import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti';
 import { MdKeyboardBackspace } from 'react-icons/md';
+import { FaRegTrashAlt } from 'react-icons/fa';
+import { IoMdAdd } from 'react-icons/io';
 import { Container } from './parts';
 
 export type SupportedIcon =
@@ -40,7 +42,9 @@ export type SupportedIcon =
   | 'close'
   | 'download'
   | 'record'
-  | 'settings';
+  | 'settings'
+  | 'trash'
+  | 'add';
 
 export interface Props {
   icon: SupportedIcon;
@@ -89,6 +93,10 @@ export const Icon: React.FC<Props> = ({ icon, size, onClick }) => {
         return <RiRecordCircleLine />;
       case 'settings':
         return <RiSettings5Fill />;
+      case 'trash':
+        return <FaRegTrashAlt />;
+      case 'add':
+        return <IoMdAdd />;
     }
   };
   return (
