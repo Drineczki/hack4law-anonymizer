@@ -5,7 +5,6 @@ plugins {
 }
 
 group = 'com.drineczki'
-version = '0.1.0-SNAPSHOT'
 sourceCompatibility = '11'
 
 configurations {
@@ -42,8 +41,10 @@ dependencies {
         'ch.qos.logback:logback-classic:1.2.6',
         'commons-io:commons-io:2.11.0',
         'org.apache.httpcomponents:httpclient:4.5.13',
-        'io.springfox:springfox-swagger2:3.0.0',
-        'io.springfox:springfox-swagger-ui:3.0.0'
+        'io.springfox:springfox-swagger2:2.9.2',
+        'io.springfox:springfox-swagger-ui:2.9.2',
+        'jakarta.xml.bind:jakarta.xml.bind-api:2.3.2',
+        'org.glassfish.jaxb:jaxb-runtime:2.3.2'
     )
 
     compileOnly 'org.projectlombok:lombok'
