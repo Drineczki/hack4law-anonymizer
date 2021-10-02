@@ -46,3 +46,8 @@ docker-compose [run/build] [container name]
 
 - Spring hot-reload not working on windows - use ./recompile after changes
 - Flutter is not connected to docker - to be done
+
+## Java API run
+* `cd java-api`
+* `sudo chmod +x ./gradlew`
+* `./gradlew bootRun`
