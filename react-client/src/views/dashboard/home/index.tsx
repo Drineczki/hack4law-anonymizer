@@ -1,21 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Box, { Center } from '~/components/Box';
 import Button from '~/components/Button';
 import DashboardTitle from '~/components/DashboardTitle';
-import FileDropZone from '~/components/FileDropZone';
+import { ModalType } from '~/components/Modal/types';
+import { useStore } from '~/global-store/hooks';
 
 export const DashboardHomeView: React.FC = () => {
-  const [file, setFile] = useState<File>();
+  const { openModal } = useStore((state) => state);
 
   return (
     <>
       <DashboardTitle>Home</DashboardTitle>
       <Center height="100%" flexDirection="column" flexShrink={1}>
-        <Box height="200px">
-          <FileDropZone onFileChange={(file) => setFile(file)} />
-        </Box>
         <Box>
-          <Button onClick={() => console.log(file)}>Wyślij</Button>
+          <Button onClick={() => openModal(ModalType.uploadFile)}>Dodaj plik</Button>
         </Box>
       </Center>
     </>
