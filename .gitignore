@@ -1,0 +1,7 @@
+*.bin
+*.lock
+.idea
+*.iws
+*.iml
+*.ipr
+.gradle

@@ -6,6 +6,9 @@ import { COLORS, FONT_WEIGHTS } from '~/styles/theme';
 import ModalWrapper from '../ModalWrapper';
 import { ModalErrorMessage, MODAL_HORIZONTAL_PADDING, MODAL_VERTICAL_PADDING } from '../parts';
 import ActionButton from '~/components/ActionButton';
+import { useStore } from '~/global-store/hooks';
+import { useHistory } from 'react-router-dom';
+import { getAnonymizerRoute } from '~/constants/routes';
 
 interface Props {
   onClose?: () => void;
@@ -16,6 +19,10 @@ export const AddFileModal: React.FC<Props> = ({ onClose }) => {
   const [error, setError] = useState<string | null>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const history = useHistory();
+
+  const { processFile } = useStore((state) => state);
+
   const onFileChange = (newFile: File) => {
     setFile(newFile);
   };
@@ -24,14 +31,23 @@ export const AddFileModal: React.FC<Props> = ({ onClose }) => {
     if (!file) return;
     setError(null);
 
-    console.log(file);
-
     if (file.type !== 'application/pdf') {
       return setError('Wybrany plik ma niepoprawny format. Proszę wybrać plik w formacie PDF.');
     }
 
+    console.log('FILE: ', file);
+
     setIsLoading(true);
-    setTimeout(() => setIsLoading(false), 3000);
+
+    try {
+      await processFile(file);
+      history.push(getAnonymizerRoute());
+      onClose && onClose();
+    } catch (_) {
+      setError('Pojawił się problem z przetwarzaniem pliku. Upewnij się, że plik jest prawidłowy i spróbuj ponownie.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

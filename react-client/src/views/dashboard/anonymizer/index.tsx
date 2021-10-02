@@ -5,18 +5,20 @@ import RulesCardList from '~/components/RulesCardList';
 import IconButton from '~/components/IconButton';
 import { Heading3 } from '~/components/Text';
 import TopBar from '~/components/TopBar';
-import { RuleType } from '~/services/types';
 import DocumentPreview from '~/components/DocumentPreview';
+import { useStore } from '~/global-store/hooks';
 
-const MOCK_RULE = {
-  originalValue: 'Jan Kowalski',
-  replacement: 'J.K.',
-  type: RuleType.person,
-};
+// const MOCK_RULE = {
+//   originalValue: 'Jan Kowalski',
+//   replacement: 'J.K.',
+//   type: RuleType.person,
+// };
 
-const MOCK_RULES = Array.from(Array(10).keys()).map(() => MOCK_RULE);
+// const MOCK_RULES = Array.from(Array(10).keys()).map(() => MOCK_RULE);
 
 export const AnonymizerView: React.FC = () => {
+  const { documentUrl, rules } = useStore((state) => state);
+
   return (
     <>
       <DashboardTitle>Anonimizacja dokumentu</DashboardTitle>
@@ -34,7 +36,7 @@ export const AnonymizerView: React.FC = () => {
           </TopBar>
           <Box marginBottom="2rem" />
 
-          <RulesCardList rules={MOCK_RULES} />
+          {rules && <RulesCardList rules={rules} />}
         </Box>
         <Box width="58%">
           <TopBar>
@@ -44,7 +46,7 @@ export const AnonymizerView: React.FC = () => {
               </Box>
             </FlexBox>
           </TopBar>
-          <DocumentPreview documentTitle="Test dokument" />
+          {documentUrl && <DocumentPreview documentTitle="Test dokument" documentUrl={documentUrl} />}
         </Box>
       </FlexBox>
     </>

@@ -30,7 +30,7 @@ export const RuleCard: React.FC<Props> = ({ originalValue, replacement, type }) 
 
   const { ref, inView } = useInView({
     /* Optional options */
-    rootMargin: '-49% 0px',
+    rootMargin: '-35% 0px -64%',
     threshold: 0,
   });
 
