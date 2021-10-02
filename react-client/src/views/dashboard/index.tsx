@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route, Redirect } from 'react-router';
 import DashboardLayout from '~/components/DashboardLayout';
 import {
-  geAnonymizerRoute,
+  getAnonymizerRoute,
   getDashboardHomeRoute,
   getDashboardRoute,
   getDocumentUploadRoute,
@@ -21,7 +21,7 @@ export const DashboardRoutes: React.FC = () => {
         <Route path={getDocumentUploadRoute()}>
           <DocumentUploadView />
         </Route>
-        <Route path={geAnonymizerRoute()}>
+        <Route path={getAnonymizerRoute()}>
           <AnonymizerView />
         </Route>
 
