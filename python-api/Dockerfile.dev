@@ -4,4 +4,5 @@ WORKDIR /app
 
 COPY ./requirements.txt ./
 
+RUN pip install git+https://github.com/Drineczki/anonymizer-ai
 RUN pip install -r ./requirements.txt
