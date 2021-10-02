@@ -1,0 +1,18 @@
+{
+	"apis": {
+		"python": {
+			"routes": ["test-python-route"]
+		},
+		"java": {
+			"routes": ["test-java-route"]
+		},
+		"node": {
+			"routes": ["test-node-route"]
+		}
+	},
+	"clients": {
+		"react": {
+			"routes": ["/"]
+		}
+	}
+}

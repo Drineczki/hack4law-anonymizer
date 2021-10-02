@@ -1,0 +1,14 @@
+# USED FOR DEVELOPMENT 
+FROM node:alpine
+
+WORKDIR '/app'
+
+COPY ./package.json .
+
+RUN npm install
+
+# Not needed since volumes are set in docker compose,
+# but may be useful in the future for referance
+COPY . .
+
+CMD ["npm", "run", "start:dev"]
