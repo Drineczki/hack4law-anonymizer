@@ -7,6 +7,7 @@ import Box, { FlexBox } from '../Box';
 import RuleTypeLabel from '../RuleTypeLabel';
 import Text, { Heading5, Paragraph } from '../Text';
 import ConfirmDeleteButton from '../ConfirmDeleteButton';
+import RuleCardEditableField from '../RuleCardEditableField';
 
 enum CardField {
   OriginalValue,
@@ -21,6 +22,11 @@ interface Props {
 
 export const RuleCard: React.FC<Props> = ({ originalValue, replacement, type }) => {
   const [editedField, setEditedField] = useState<CardField | null>(null);
+
+  const onFieldChange = (field: CardField, value: string) => {
+    setEditedField(null);
+    console.log(value);
+  };
 
   const { ref, inView } = useInView({
     /* Optional options */
@@ -47,20 +53,22 @@ export const RuleCard: React.FC<Props> = ({ originalValue, replacement, type }) 
         </FlexBox>
         <FlexBox marginBottom="1.5rem">
           <Box width="50%">
-            <Box opacity="0.8" marginBottom="0.5rem">
-              <Heading5 fontSize="0.8rem" fontWeight={600}>
-                Fraza do anonimizacji
-              </Heading5>
-            </Box>
-            <Paragraph fontSize="1.1rem">{originalValue}</Paragraph>
+            <RuleCardEditableField
+              label="Fraza do anonimizacji"
+              value={originalValue}
+              onEdit={() => setEditedField(CardField.OriginalValue)}
+              onConfirmEdit={(value) => onFieldChange(CardField.OriginalValue, value)}
+              isEdited={editedField === CardField.OriginalValue}
+            />
           </Box>
-          <Box width="50%">
-            <Box opacity="0.8" marginBottom="0.5rem">
-              <Heading5 fontSize="0.8rem" fontWeight={600}>
-                Fraza zastępcza
-              </Heading5>
-              <Paragraph>{replacement}</Paragraph>
-            </Box>
+          <Box width="50%" paddingLeft="1rem">
+            <RuleCardEditableField
+              label="Fraza zastępcza"
+              value={replacement}
+              onEdit={() => setEditedField(CardField.Replacement)}
+              onConfirmEdit={(value) => onFieldChange(CardField.Replacement, value)}
+              isEdited={editedField === CardField.Replacement}
+            />
           </Box>
         </FlexBox>
         <Box>
