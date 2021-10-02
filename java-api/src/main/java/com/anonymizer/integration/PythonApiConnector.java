@@ -1,20 +1,24 @@
 package com.anonymizer.integration;
 
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import com.anonymizer.FileProcessingResponse;
-import com.fasterxml.jackson.core.ObjectCodec;
+import com.anonymizer.FileStorageException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PythonApiConnector {
@@ -28,12 +32,18 @@ public class PythonApiConnector {
   @Value("${python.api.endpoint.url}")
   private String endpointPath;
 
-  public ResponseList processFile(String fileAsText) {
+  public List<AnonymizeObject> processFile(String fileAsText) {
     var requestUrl = basePath + endpointPath;
-    HttpEntity<String> request = new HttpEntity<String>(fileAsText, new HttpHeaders());
+    var textRequest = new TextRequest(fileAsText);
+    var request = new HttpEntity<>(textRequest, new HttpHeaders());
 
-    ResponseEntity<ResponseList> responseEntityStr = restTemplate.postForEntity(requestUrl, request, ResponseList.class);
-
-    return responseEntityStr.getBody();
+    String personResultAsJsonStr =
+        restTemplate.postForObject(requestUrl, request, String.class);
+    try {
+      return Arrays.stream(objectMapper.readValue(personResultAsJsonStr, AnonymizeObject[].class))
+          .collect(Collectors.toList());
+    } catch (IOException ex) {
+      throw new FileStorageException("Przykro mi ");
+    }
   }
 }

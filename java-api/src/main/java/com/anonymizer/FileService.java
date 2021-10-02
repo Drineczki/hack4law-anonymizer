@@ -1,15 +1,5 @@
 package com.anonymizer;
 
-import org.apache.commons.io.FilenameUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -17,6 +7,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import com.anonymizer.integration.AnonymizeList;
 import com.anonymizer.integration.PythonApiConnector;
 
 import lombok.RequiredArgsConstructor;
@@ -73,26 +73,32 @@ public class FileService {
   }
 
   public FileProcessingResponse processFile(MultipartFile file) {
+    validateFile(file);
     var originalFileName = StringUtils.cleanPath(file.getOriginalFilename());
     var storedFilePath = storeFile(file);
     var fileAsText = pdfService.getAsText(storedFilePath);
     var outputFileName = "processed-" + originalFileName;
 
-    var responseList = pythonApiConnector.processFile(fileAsText).getValues();
+    var responseList = pythonApiConnector.processFile(fileAsText);
 
     pdfService.replaceInOriginalFile(storedFilePath, resolveFileName(outputFileName), responseList);
 
     var fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-        .path("/downloadFile/")
-        .path(originalFileName)
+        .path("/files/")
+        .path(outputFileName)
         .toUriString();
 
 
-    return new FileProcessingResponse(); // TODO
+    return new FileProcessingResponse(outputFileName, fileDownloadUri, file.getSize(), responseList); // TODO
   }
 
   public String resolveFileName(String fileName) {
     return this.fileStorageLocation.resolve(fileName).toString();
+  }
+
+  public FileProcessingResponse changeReplacements(String fileName, AnonymizeList replacementList) {
+    return new FileProcessingResponse();
+
   }
 
   private void validateFile(MultipartFile file) {

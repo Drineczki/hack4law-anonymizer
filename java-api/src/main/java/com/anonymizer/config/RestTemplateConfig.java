@@ -1,5 +1,7 @@
 package com.anonymizer.config;
 
+import java.nio.charset.StandardCharsets;
+
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -9,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
@@ -27,6 +30,8 @@ public class RestTemplateConfig {
 
     ClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
 
-    return new RestTemplate(requestFactory);
+    var restTemplate = new RestTemplate(requestFactory);
+    restTemplate.getMessageConverters().add(0, new StringHttpMessageConverter(StandardCharsets.UTF_8));
+    return restTemplate;
   }
 }

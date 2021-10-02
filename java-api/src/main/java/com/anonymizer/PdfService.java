@@ -8,7 +8,7 @@ import java.util.stream.StreamSupport;
 
 import org.springframework.stereotype.Service;
 
-import com.anonymizer.integration.ResponseObject;
+import com.anonymizer.integration.AnonymizeObject;
 import com.spire.pdf.PdfDocument;
 import com.spire.pdf.PdfPageBase;
 import com.spire.pdf.exporting.text.SimpleTextExtractionStrategy;
@@ -39,15 +39,9 @@ public class PdfService {
 
   }
 
-  public void replaceInOriginalFile(String inputFileUri, String outputFileUri, List<ResponseObject> replacementList) {
-    var replacementMap = replacementList.stream().collect(Collectors.toMap(
-        ResponseObject::getOriginalValue, ResponseObject::getAnonymizedValue
-    ));
-
+  public void replaceInOriginalFile(String inputFileUri, String outputFileUri, List<AnonymizeObject> replacementList) {
     var pdfDocument = new PdfDocument();
     pdfDocument.loadFromFile(inputFileUri);
-
-    PdfTextFind[] results;
 
     StreamSupport.stream(pdfDocument.getPages().spliterator(), false)
             .forEach(page -> findAndReplace(page, replacementList));
@@ -65,16 +59,16 @@ public class PdfService {
     pdfDocument.saveToFile(outputFileUri);
   }
 
-  private void findAndReplace(Object page, List<ResponseObject> replacementList) {
+  private void findAndReplace(Object page, List<AnonymizeObject> replacementList) {
     var pageBase = (PdfPageBase) page;
     replacementList.forEach(replacement -> {
       find(replacement, pageBase)
-          .forEach(find -> replace(find, replacement.getAnonymizedValue()));
+          .forEach(find -> replace(find, replacement.getAnonymization()));
     });
   }
 
-  private List<PdfTextFind> find(ResponseObject replacement, PdfPageBase pageBase) {
-    return List.of(pageBase.findText(replacement.getOriginalValue()).getFinds());
+  private List<PdfTextFind> find(AnonymizeObject replacement, PdfPageBase pageBase) {
+    return List.of(pageBase.findText(replacement.getEntity()).getFinds());
   }
 
   private void replace(PdfTextFind find, String newValue) {

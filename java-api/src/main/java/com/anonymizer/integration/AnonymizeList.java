@@ -5,6 +5,6 @@ import java.util.List;
 import lombok.Value;
 
 @Value
-public class ResponseList {
-  List<ResponseObject> values;
+public class AnonymizeList {
+  List<AnonymizeObject> values;
 }

@@ -16,11 +16,15 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.anonymizer.integration.AnonymizeList;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,26 +42,7 @@ public class FileController {
     return fileService.processFile(file);
   }
 
-//  @PostMapping("/to-text")
-//  public String uploadFile(@RequestParam("file") MultipartFile file) {
-////    var fileName = fileService.storeFile(file);
-////
-////    var fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-////        .path("/downloadFile/")
-////        .path(fileName)
-////        .toUriString();
-//
-//    return fileService.getAsText(file);
-//  }
-
-//  @PostMapping("/uploadMultipleFiles")
-//  public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
-//    return Arrays.stream(files)
-//        .map(this::uploadFile)
-//        .collect(Collectors.toList());
-//  }
-
-  @GetMapping("/downloadFile/{fileName:.+}")
+  @GetMapping("/{fileName}")
   public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
     // Load file as Resource
     Resource resource = fileService.loadFileAsResource(fileName);
@@ -80,6 +65,30 @@ public class FileController {
         .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
         .body(resource);
   }
+
+  @PutMapping("/{fileName}")
+  public FileProcessingResponse changeReplacements(@PathVariable String fileName, @RequestBody AnonymizeList replacementList) {
+    return fileService.changeReplacements(fileName, replacementList); // TODO
+  }
+
+//  @PostMapping("/to-text")
+//  public String uploadFile(@RequestParam("file") MultipartFile file) {
+////    var fileName = fileService.storeFile(file);
+////
+////    var fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+////        .path("/downloadFile/")
+////        .path(fileName)
+////        .toUriString();
+//
+//    return fileService.getAsText(file);
+//  }
+
+//  @PostMapping("/uploadMultipleFiles")
+//  public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
+//    return Arrays.stream(files)
+//        .map(this::uploadFile)
+//        .collect(Collectors.toList());
+//  }
 
   @RequestMapping(method = {RequestMethod.GET}, value = "/getFile/{fileName}", produces =
       MediaType.MULTIPART_FORM_DATA_VALUE)
