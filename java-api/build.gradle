@@ -34,7 +34,6 @@ build.dependsOn(copyLibs)
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'com.itextpdf:itextpdf:5.0.6'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'e-iceblue:spire.pdf:3.11.6'
     implementation("org.apache.commons:commons-lang3:3.12.0")
