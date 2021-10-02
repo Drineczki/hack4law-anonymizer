@@ -67,13 +67,15 @@ export const boxStyledSystem = compose(
   })
 );
 
-const Box = styled.div<BoxProps>(
-  {
-    flexShrink: 0 // this is for Safari
-  },
-  boxStyledSystem
-);
+const Box = styled.div<BoxProps>({ flexShrink: 0 }, boxStyledSystem);
 
 export default Box;
 
-export const FlexBox = styled(Box)({ display: 'flex' });
+export const FlexBox = styled(Box)`
+  display: flex;
+`;
+
+export const Center = styled(FlexBox)`
+  align-items: center;
+  justify-content: center;
+`;

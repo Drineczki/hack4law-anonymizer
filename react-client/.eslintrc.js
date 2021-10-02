@@ -16,13 +16,14 @@ module.exports = {
     ecmaVersion: 11,
     sourceType: 'module'
   },
-  plugins: ['react', '@typescript-eslint'],
+  plugins: ['react', '@typescript-eslint', 'react-hooks'],
   rules: {
     '@typescript-eslint/camelcase': 0,
     '@typescript-eslint/explicit-function-return-type': 0,
     '@typescript-eslint/explicit-module-boundary-types': 0,
     '@typescript-eslint/no-unused-vars': 1,
     'react/display-name': 0,
+    'react/prop-types': 0,
     'linebreak-style': ['error', 'unix'],
     quotes: ['error', 'single'],
     semi: [2, 'always'],

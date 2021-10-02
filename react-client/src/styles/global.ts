@@ -1,7 +1,7 @@
 import { createGlobalStyle, css } from 'styled-components';
 import { normalize } from 'styled-normalize';
 
-const baseFontFamily = 'Arial';
+const baseFontFamily = 'Poppins';
 
 const globalStyles = css`
   html {
@@ -61,7 +61,9 @@ const defaultStylesReset = css`
   a,
   input,
   textarea,
-  select {
+  select,
+  ul,
+  li {
     margin: 0;
     padding: 0;
     border: 0;
@@ -72,9 +74,102 @@ const defaultStylesReset = css`
     }
   }
 
-  figure {
+  a {
+    color: inherit;
+    cursor: inherit;
+    text-decoration: none;
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  figure,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  p {
     margin: 0;
     padding: 0;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+
+  h4 {
+    font-size: 1.2rem;
+  }
+
+  h5,
+  p {
+    font-size: 1rem;
+  }
+
+  @keyframes slide-in-bottom {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-out-little {
+    0% {
+      visibility: visible;
+      opacity: 0.2;
+    }
+    99% {
+      visibility: visible;
+      opacity: 0;
+    }
+    100% {
+      visibility: hidden;
+      opacity: 0;
+    }
+  }
+
+  @keyframes fade-in-little {
+    0% {
+      visibility: hidden;
+      opacity: 0;
+    }
+    1% {
+      visibility: visible;
+      opacity: 0;
+    }
+    100% {
+      visibility: visible;
+      opacity: 0.3;
+    }
+  }
+
+  @keyframes fade-in {
+    0% {
+      visibility: hidden;
+      opacity: 0;
+    }
+    1% {
+      visibility: visible;
+      opacity: 0;
+    }
+    100% {
+      visibility: visible;
+      opacity: 1;
+    }
   }
 `;
 
