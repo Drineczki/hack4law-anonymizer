@@ -5,4 +5,5 @@ WORKDIR /app
 COPY ./requirements.txt ./
 
 RUN pip install git+https://github.com/Drineczki/anonymizer-ai
+RUN python -m spacy download pl_core_news_md
 RUN pip install -r ./requirements.txt
