@@ -81,7 +81,7 @@ services:
       - '${JAVA_API_PORT}:${JAVA_API_PORT}'
     depends_on:
       - java-builder
-    command: java -cp "/app/classes/java/main:/app/dependencies/*:/app/resources/main" com.drineczki.demo.DemoApplication
+    command: java -cp "/app/classes/java/main:/app/dependencies/*:/app/resources/main" com.anonymizer.AnonymizerApplication
 
   java-builder:
     image: gradle:jdk11

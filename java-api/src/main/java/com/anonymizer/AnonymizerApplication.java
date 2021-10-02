@@ -9,8 +9,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
         FileStorageProperties.class
 })
 public class AnonymizerApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(AnonymizerApplication.class, args);
     }
 }
+
