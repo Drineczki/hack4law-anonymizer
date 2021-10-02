@@ -19,7 +19,7 @@ async def root():
     return {"message": "Hello from python!"}
 
 
-@app.get("/anonymize")
+@app.post("/anonymize")
 async def anonymize(item: AnonimizeRequest):
     collection = agent.anonymize(item.text)
     response = [AnonimizeResponse(  entity=elem.entity,

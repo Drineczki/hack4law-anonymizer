@@ -20,6 +20,9 @@ configurations {
 
 repositories {
     mavenCentral()
+    maven {
+        url "https://repo.e-iceblue.com/nexus/content/groups/public/"
+    }
 }
 
 task copyLibs(type: Copy) {
@@ -30,12 +33,19 @@ task copyLibs(type: Copy) {
 build.dependsOn(copyLibs)
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'com.h2database:h2'
-    implementation 'javax.validation:validation-api:2.0.1.Final'
-    implementation 'org.hibernate:hibernate-validator:6.1.6.Final'
-    runtime 'org.postgresql:postgresql'
+    implementation(
+        'org.apache.httpcomponents:httpclient:4.5.13',
+        'org.springframework.boot:spring-boot-starter-web',
+        'org.springframework.boot:spring-boot-starter-actuator',
+        'e-iceblue:spire.pdf:3.11.6',
+        'org.apache.commons:commons-lang3:3.12.0',
+        'ch.qos.logback:logback-classic:1.2.6',
+        'commons-io:commons-io:2.11.0',
+        'org.apache.httpcomponents:httpclient:4.5.13',
+        'io.springfox:springfox-swagger2:3.0.0',
+        'io.springfox:springfox-swagger-ui:3.0.0'
+    )
+
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
