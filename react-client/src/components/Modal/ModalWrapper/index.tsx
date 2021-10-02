@@ -1,4 +1,4 @@
-import Box, { FlexBox } from '~/components/Box';
+import { FlexBox } from '~/components/Box';
 import Icon from '~/components/Icon';
 import { ModalOverlay } from '~/components/ModalOverlay';
 import { Heading3 } from '~/components/Text';
