@@ -1,5 +1,5 @@
 import React from 'react';
-import Box, {Center} from '../Box';
+import Box, { Center } from '../Box';
 import { Document, Page, pdfjs } from 'react-pdf';
 import Card from './parts';
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
@@ -7,22 +7,23 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 import 'react-pdf/dist/umd/Page/AnnotationLayer.css';
 
 const options = {
-  useSystemFonts: false
+  useSystemFonts: false,
 };
 
 interface Props {
   documentTitle: string;
+  documentUrl: string;
 }
-export const DocumentPreview: React.FC<Props> = ({ documentTitle }) => {
+export const DocumentPreview: React.FC<Props> = ({ documentTitle, documentUrl }) => {
   return (
     <Card>
       <Box width="100%" height="92vh">
         <Center>
           <Document
             file={{
-              url: 'http://localhost:8080/out.pdf',
+              url: documentUrl,
             }}
-            renderMode='svg'
+            renderMode="svg"
             options={options}
           >
             <Page pageNumber={1} />

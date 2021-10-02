@@ -1,18 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
-import { RuleType } from '~/services/types';
+import { mapRuleTypeToString, RuleType } from '~/services/types';
 import { COLORS } from '~/styles/theme';
 
 export const getColorForRuleType = (type: RuleType) => {
   switch (type) {
-    case RuleType.person:
+    case RuleType.Personal:
       return COLORS.primary;
-    case RuleType.area:
+    case RuleType.Place:
       return COLORS.accent1;
-    case RuleType.geo:
+    case RuleType.Numerical:
       return COLORS.accent2;
+    case RuleType.Internet:
+      return COLORS.danger;
+    case RuleType.GeoLoc:
+      return COLORS.accent1;
     default:
-      throw new Error('No such rule type!');
+      return COLORS.primary;
   }
 };
 
@@ -28,7 +32,7 @@ interface Props {
   type: RuleType;
 }
 export const RuleTypeLabel: React.FC<Props> = ({ type }) => {
-  return <Container type={type}>{type}</Container>;
+  return <Container type={type}>{mapRuleTypeToString(type)}</Container>;
 };
 
 export default RuleTypeLabel;

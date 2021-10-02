@@ -1,11 +1,12 @@
 import React from 'react';
+import { RuleDTO } from '~/dtos/rule-dto';
 import Box, { Center } from '../Box';
 import RuleCard from '../RuleCard';
 import { Heading4 } from '../Text';
 
 interface Props {
   // TODO: FIx with dto
-  rules: any[];
+  rules: RuleDTO[];
 }
 export const RulesCardList: React.FC<Props> = ({ rules }) => {
   if (!rules || !rules.length) {
@@ -19,7 +20,7 @@ export const RulesCardList: React.FC<Props> = ({ rules }) => {
   return (
     <>
       {rules.map((rule, index) => (
-        <RuleCard key={index} originalValue={rule.originalValue} replacement={rule.replacement} type={rule.type} />
+        <RuleCard key={index} originalValue={rule.entity} replacement={rule.anonymization} type={rule.anon_type} />
       ))}
       <Box paddingBottom="40vh" />
     </>
