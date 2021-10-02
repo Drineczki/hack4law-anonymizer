@@ -26,4 +26,4 @@ async def anonymize(item: AnonimizeRequest):
                                     anonymization=elem.anonymization,
                                     anon_type=elem.anon_type)
                                     for elem in collection]
-    return {"response": response}
+    return response
