@@ -1,15 +1,23 @@
 import React from 'react';
-import Box from '../Box';
+import { COLORS } from '~/styles/theme';
+import { FlexBox } from '../Box';
+import Icon from '../Icon';
 
-interface Props {
-  picture: string
-}
-
-const ProfilePicture: React.FC<Props> = ({picture}) => {
+const ProfilePicture: React.FC = () => {
   return (
-    <Box borderRadius="50%" overflow="hidden" width="60px" height="60px" margin="1rem auto">
-      <img src={picture} alt="profile_picture" width="100%" height="100%" object-fit="cover"/>
-    </Box>
+    <FlexBox
+      justifyContent="center"
+      alignItems="center"
+      borderRadius="50%"
+      overflow="hidden"
+      width="80px"
+      height="80px"
+      margin="1rem auto"
+      background={COLORS.primary}
+      color="white"
+    >
+      <Icon icon="user-fill" size={26} />
+    </FlexBox>
   );
 };
 

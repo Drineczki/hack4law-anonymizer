@@ -60,9 +60,10 @@ export interface Props {
   icon: SupportedIcon;
   size?: number;
   onClick?: () => void;
+  color?: string;
 }
 
-export const Icon: React.FC<Props> = ({ icon, size, onClick }) => {
+export const Icon: React.FC<Props> = ({ icon, size, onClick, color }) => {
   const renderIcon = () => {
     switch (icon) {
       case 'play-circle':
@@ -122,7 +123,7 @@ export const Icon: React.FC<Props> = ({ icon, size, onClick }) => {
     }
   };
   return (
-    <Container size={size} onClick={onClick}>
+    <Container size={size} onClick={onClick} style={{ color }}>
       {renderIcon()}
     </Container>
   );

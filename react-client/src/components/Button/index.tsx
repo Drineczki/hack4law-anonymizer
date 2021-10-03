@@ -15,11 +15,10 @@ export default Button;
 
 export const NavButton = styled(Button)`
   width: 100%;
-  margin: .5rem 0;
+  margin: 1rem 0;
   color: #9192a3;
 
   &:hover {
-    color: #777DF2;
+    color: #777df2;
   }
-}
 `;
