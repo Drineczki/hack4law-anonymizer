@@ -8,27 +8,24 @@ export const DocumentActionsBar: React.FC = () => {
   const documentTitle = useStore((state) => state.documentName);
   const documentUrl = useStore((state) => state.documentUrl);
   const updateReplacements = useStore((state) => state.uploadChanges);
+  const download = useStore((state) => state.uploadChangesFinally);
   const replacements = useStore((state) => state.rules);
   return (
     <FlexBox>
       <Box marginLeft="auto" transform="translateY(-20%)">
         <IconButton
           icon="refresh"
-          onClick={() => documentTitle && replacements && updateReplacements(documentTitle, replacements, false)}
+          onClick={() => documentTitle && replacements && updateReplacements(documentTitle, replacements)}
         />
       </Box>
-      {documentUrl && documentUrl && (
+      {documentTitle && replacements && (
         <Box marginLeft="1rem" transform="translateY(-20%)">
-          <a href={documentUrl} download={documentTitle} target="_blank" rel="noopener noreferrer">
-            <IconButton
-              icon="refresh"
-              color={COLORS.primary}
-              isDanger
-              onClick={() => {
-                //
-              }}
-            />
-          </a>
+          <IconButton
+            icon="download"
+            color={COLORS.primary}
+            isDanger
+            onClick={() => download(documentTitle, replacements)}
+          />
         </Box>
       )}
       <Box marginLeft="1rem" transform="translateY(-20%)">

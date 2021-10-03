@@ -12,7 +12,7 @@ export const getColorForRuleType = (type: RuleType) => {
     case RuleType.Numerical:
       return COLORS.accent2;
     case RuleType.Internet:
-      return COLORS.danger;
+      return COLORS.primary;
     case RuleType.GeoLoc:
       return COLORS.accent1;
     default:
