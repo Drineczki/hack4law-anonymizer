@@ -13,9 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @Slf4j
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/files")
-@CrossOrigin("*")
 @RequiredArgsConstructor
 public class FileController {
 
@@ -29,15 +29,12 @@ public class FileController {
   @GetMapping("/{fileName}")
   public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) {
     Resource resource = fileService.loadFileAsResource(fileName);
-    return ResponseEntity.ok()
-        .contentType(MediaType.APPLICATION_PDF)
-        .body(resource);
+    return ResponseEntity.ok().contentType(MediaType.APPLICATION_PDF).body(resource);
   }
 
   @PutMapping("/{fileName}")
   public FileProcessingResponse changeReplacements(@PathVariable String fileName,
-                                                   @RequestBody List<AnonymizeObject> replacementList,
-                                                   @RequestParam Boolean accept) {
+      @RequestBody List<AnonymizeObject> replacementList, @RequestParam Boolean accept) {
     return fileService.changeReplacements(fileName, replacementList, accept);
   }
 }

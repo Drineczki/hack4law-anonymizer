@@ -15,10 +15,17 @@ import {
   RiLogoutBoxLine,
   RiDownload2Line,
   RiRecordCircleLine,
-  RiSettings5Fill
+  RiSettings5Fill,
 } from 'react-icons/ri';
 import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti';
 import { MdKeyboardBackspace } from 'react-icons/md';
+import { FiEdit } from 'react-icons/fi';
+import { AiOutlineCheck, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
+
+import { FaRegTrashAlt, FaHome } from 'react-icons/fa';
+import { IoMdAdd } from 'react-icons/io';
+import { MdRefresh } from 'react-icons/md';
+import { IoDocumentText } from 'react-icons/io5';
 import { Container } from './parts';
 
 export type SupportedIcon =
@@ -40,15 +47,25 @@ export type SupportedIcon =
   | 'close'
   | 'download'
   | 'record'
-  | 'settings';
+  | 'settings'
+  | 'trash'
+  | 'add'
+  | 'edit'
+  | 'accept'
+  | 'minus'
+  | 'plus'
+  | 'home'
+  | 'document'
+  | 'refresh';
 
 export interface Props {
   icon: SupportedIcon;
   size?: number;
   onClick?: () => void;
+  color?: string;
 }
 
-export const Icon: React.FC<Props> = ({ icon, size, onClick }) => {
+export const Icon: React.FC<Props> = ({ icon, size, onClick, color }) => {
   const renderIcon = () => {
     switch (icon) {
       case 'play-circle':
@@ -89,10 +106,28 @@ export const Icon: React.FC<Props> = ({ icon, size, onClick }) => {
         return <RiRecordCircleLine />;
       case 'settings':
         return <RiSettings5Fill />;
+      case 'trash':
+        return <FaRegTrashAlt />;
+      case 'add':
+        return <IoMdAdd />;
+      case 'edit':
+        return <FiEdit />;
+      case 'accept':
+        return <AiOutlineCheck />;
+      case 'minus':
+        return <AiOutlineMinus />;
+      case 'plus':
+        return <AiOutlinePlus />;
+      case 'home':
+        return <FaHome />;
+      case 'document':
+        return <IoDocumentText />;
+      case 'refresh':
+        return <MdRefresh />;
     }
   };
   return (
-    <Container size={size} onClick={onClick}>
+    <Container size={size} onClick={onClick} style={{ color }}>
       {renderIcon()}
     </Container>
   );

@@ -10,12 +10,10 @@ export const ModalOverlay = styled.div<{ isVisible: boolean | null }>`
   width: 100%;
   height: 100vh;
   background-color: ${({ theme }) => theme.colors.black};
-  opacity: 0.3;
+  opacity: 0.5;
   cursor: ${(props) => (props.onClick && props.isVisible ? 'pointer' : 'auto')};
 
-  animation-name: ${(props) =>
-    props.isVisible ? 'fade-in-little' : 'fade-out-little'};
-  animation-fill-mode: ${(props) =>
-    props.isVisible ? 'backwards' : 'forwards'};
+  animation-name: ${(props) => (props.isVisible ? 'fade-in-little' : 'fade-out-little')};
+  animation-fill-mode: ${(props) => (props.isVisible ? 'backwards' : 'forwards')};
   animation-duration: 0.25s;
 `;

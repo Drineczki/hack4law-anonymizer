@@ -39,11 +39,11 @@ export const Input = styled.input`
   height: 0;
 
   &:checked + ${Slider} {
-    background-color: ${({ theme }) => theme.colors.primary100};
+    background-color: ${({ theme }) => theme.colors.primary};
   }
 
   &:focused + ${Slider} {
-    box-shadow: 0 0 1px ${({ theme }) => theme.colors.primary100};
+    box-shadow: 0 0 1px ${({ theme }) => theme.colors.primary};
   }
 
   &:checked + ${Slider}:before {

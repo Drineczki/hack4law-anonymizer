@@ -5,20 +5,19 @@ export interface CustomTheme {
     black: string;
     transparent: string;
     white: string;
-    background20: string;
-    background50: string;
-    background70: string;
-    primary100: string;
-    primary80: string;
-    secondary100: string;
-    accentPrimary100: string;
-    accentSecondary100: string;
-    danger100: string;
-    danger70: string;
+    gray: string;
+    background: string;
+    primary: string;
+    primaryLight: string;
+    accent1: string;
+    accent1Light: string;
+    accent2: string;
+    accent2Light: string;
+    danger: string;
+    dangerLight: string;
   };
   radiuses: {
     regular: number;
-    medium: number;
     large: number;
     full: string;
   };
@@ -75,23 +74,23 @@ export const COLORS = {
   black: '#000000',
   transparent: 'transparent',
   white: '#ffffff',
-  background20: '#202442',
-  background50: '#25294A',
-  background70: '#2A2F54',
-  primary100: '#7033FF',
-  primary80: '#5a29cc',
-  secondary100: '#2A99FF',
-  accentPrimary100: '#44F3FE',
-  accentSecondary100: '#EE249F',
-  danger100: '#c0392b',
-  danger70: '#86281e'
+  gray: '#c4ccde',
+  background: '#f6f4fc',
+  primary: '#777DF2',
+  primaryLight: '#858af3',
+  accent1: '#F22786',
+  accent1Light: '#FF44DF',
+  accent2: '#F2B366',
+  accent2Light: '#FFBC82',
+  danger: '#c0392b',
+  dangerLight: '#86281e',
 };
 
 export const RADIUSES = {
-  regular: 6,
-  medium: 10,
-  large: 16,
-  full: '100%'
+  regular: 4,
+  medium: 8,
+  large: 12,
+  full: '100%',
 };
 
 export const FONT_WEIGHTS = {
@@ -103,37 +102,37 @@ export const FONT_WEIGHTS = {
   semiBold: 600,
   bold: 700,
   extraBold: 800,
-  black: 900
+  black: 900,
 };
 
 export const TRANSITIONS = {
-  shortAll: 'all .3s ease-in-out',
-  defaultAll: 'all .5s ease-in-out',
-  longAll: 'all .8s ease-in-out'
+  shortAll: 'all .15s ease-in-out',
+  defaultAll: 'all .3s ease-in-out',
+  longAll: 'all .5s ease-in-out',
 };
 
 export const SHADOWS = {
-  smallBlack: '',
-  defaultBlack: '',
-  bigBlack: ''
+  smallBlack: '0 0.5rem 0.4rem rgba(0, 0, 0, 0.1)',
+  defaultBlack: '0 0.75rem 0.5rem rgba(0, 0, 0, 0.2)',
+  bigBlack: '0 1rem 1rem rgba(0, 0, 0, 0.2)',
 };
 
 export const FONT_SIZES = {
-  superSmall: '.625rem',
-  small: '.75rem',
-  regular: '1rem',
-  medium: '1.125rem',
-  big: '1.375rem',
-  headingSmall: '1.625rem',
-  headingMedium: '1.75rem',
-  headingBig: '2rem'
+  superSmall: '.625rem', // 10px
+  small: '.75rem', // 12px
+  regular: '1rem', // 16px
+  medium: '1.125rem', // 18px
+  big: '1.375rem', // 22px
+  headingSmall: '1.625rem', // 26px
+  headingMedium: '1.75rem', // 28px
+  headingBig: '2rem', // 32px
 };
 
 export const DEFAULTS = {
   duration_ms: 300,
   duration: '.3',
   easing: 'ease-in-out',
-  transition: 'all .3s ease-in-out'
+  transition: 'all .3s ease-in-out',
 };
 
 export enum Device {
@@ -145,7 +144,7 @@ export enum Device {
   TabS = 'tabS',
   Mobile = 'mobile',
   MobileS = 'mobileS',
-  MobileXS = 'mobileXS'
+  MobileXS = 'mobileXS',
 }
 
 export const BREAKPOINTS: Record<Device, number> = {
@@ -157,28 +156,22 @@ export const BREAKPOINTS: Record<Device, number> = {
   [Device.TabS]: 780,
   [Device.Mobile]: 600,
   [Device.MobileS]: 450,
-  [Device.MobileXS]: 320
+  [Device.MobileXS]: 320,
 };
 
 export const MEDIA_QUERIES = {
   ...Object.values(Device).reduce<Record<Device, string>>((acc, breakpoint) => {
     return {
       ...acc,
-      [breakpoint]: `only screen and (max-width: ${BREAKPOINTS[breakpoint]}px)`
+      [breakpoint]: `only screen and (max-width: ${BREAKPOINTS[breakpoint]}px)`,
     };
   }, {} as Record<Device, string>),
-  [Device.Mobile]: `only screen and (max-width: ${
-    BREAKPOINTS[Device.Mobile]
-  }px),
+  [Device.Mobile]: `only screen and (max-width: ${BREAKPOINTS[Device.Mobile]}px),
     only screen and (max-height: ${BREAKPOINTS[Device.MobileS]}px)`,
-  [Device.MobileS]: `only screen and (max-width: ${
-    BREAKPOINTS[Device.MobileS]
-  }px),
+  [Device.MobileS]: `only screen and (max-width: ${BREAKPOINTS[Device.MobileS]}px),
     only screen and (max-height: ${BREAKPOINTS[Device.MobileXS]}px)`,
-  [Device.MobileXS]: `only screen and (max-width: ${
-    BREAKPOINTS[Device.MobileXS]
-  }px),
-    only screen and (max-height: ${BREAKPOINTS[Device.MobileXS]}px)`
+  [Device.MobileXS]: `only screen and (max-width: ${BREAKPOINTS[Device.MobileXS]}px),
+    only screen and (max-height: ${BREAKPOINTS[Device.MobileXS]}px)`,
 };
 
 export const Z_INDEX = {
@@ -193,7 +186,7 @@ export const Z_INDEX = {
   stickedFront: 29,
   modalBack: 30,
   modalMiddle: 35,
-  modalFront: 39
+  modalFront: 39,
 };
 
 export const defaultTheme: DefaultTheme = {
@@ -205,5 +198,5 @@ export const defaultTheme: DefaultTheme = {
   zIndex: Z_INDEX,
   transitions: TRANSITIONS,
   breakpoints: BREAKPOINTS,
-  mediaQueries: MEDIA_QUERIES
+  mediaQueries: MEDIA_QUERIES,
 };

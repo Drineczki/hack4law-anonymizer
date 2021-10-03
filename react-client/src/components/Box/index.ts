@@ -19,7 +19,7 @@ import {
   SpaceProps,
   system,
   textAlign,
-  TextAlignProps
+  TextAlignProps,
 } from 'styled-system';
 
 type BoxPropsWithColor = FlexboxProps &
@@ -33,12 +33,7 @@ type BoxPropsWithColor = FlexboxProps &
   ColorProps<DefaultTheme> &
   Pick<
     CSSProperties,
-    | 'transform'
-    | 'transition'
-    | 'direction'
-    | 'userSelect'
-    | 'pointerEvents'
-    | 'cursor'
+    'transform' | 'transition' | 'direction' | 'userSelect' | 'pointerEvents' | 'cursor' | 'visibility'
   >;
 
 // color is omited to avoid conflict with react props
@@ -57,13 +52,13 @@ export const boxStyledSystem = compose(
   system({
     transition: {
       property: 'transition',
-      scale: 'transitions'
+      scale: 'transitions',
     },
     cursor: true,
     pointerEvents: true,
     transform: true,
     direction: true,
-    userSelect: true
+    userSelect: true,
   })
 );
 
@@ -73,6 +68,11 @@ export default Box;
 
 export const FlexBox = styled(Box)`
   display: flex;
+`;
+
+export const FlexCol = styled(Box)`
+  display: flex;
+  flex-direction: column;
 `;
 
 export const Center = styled(FlexBox)`

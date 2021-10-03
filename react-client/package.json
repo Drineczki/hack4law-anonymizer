@@ -1,5 +1,5 @@
 {
-  "name": "audio-analyser",
+  "name": "anonymizer",
   "version": "0.1.0",
   "private": false,
   "scripts": {
@@ -20,7 +20,6 @@
     "chroma-js": "^2.1.2",
     "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",
-    "easy-peasy": "^3.3.1",
     "js-file-download": "^0.4.12",
     "meyda": "^5.1.8",
     "p5": "~0.9.0",
@@ -30,6 +29,8 @@
     "react-dropzone": "^11.3.2",
     "react-ga": "^3.1.2",
     "react-icons": "^4.2.0",
+    "react-intersection-observer": "^8.32.1",
+    "react-pdf": "^5.4.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-router-last-location": "^2.0.1",
@@ -38,7 +39,8 @@
     "styled-components": "^5.1.1",
     "styled-normalize": "^8.0.7",
     "styled-system": "^5.1.5",
-    "wavesurfer.js": "^4.5.0"
+    "wavesurfer.js": "^4.5.0",
+    "zustand": "^3.5.12"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.13.12",
@@ -56,6 +58,7 @@
     "@types/react": "^16.9.35",
     "@types/react-datepicker": "^3.1.8",
     "@types/react-dom": "^16.9.8",
+    "@types/react-pdf": "^5.0.7",
     "@types/react-router-dom": "^5.1.7",
     "@types/snowpack-env": "^2.3.3",
     "@types/spectrogram": "^0.0.0",

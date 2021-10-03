@@ -4,14 +4,16 @@ import { ThemeProvider } from 'styled-components';
 import { GlobalStyles } from '~/styles/global';
 import { defaultTheme } from '~/styles/theme';
 import AppRoutes from '~/views';
+import ModalsContainer from './components/Modal';
 
 const App: React.FC = () => {
   return (
-    <div className='App'>
+    <div className="App">
       <ThemeProvider theme={defaultTheme}>
         <GlobalStyles />
         <Router>
           <AppRoutes />
+          <ModalsContainer />
         </Router>
       </ThemeProvider>
     </div>
