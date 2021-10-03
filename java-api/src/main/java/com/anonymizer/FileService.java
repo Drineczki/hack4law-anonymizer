@@ -109,7 +109,7 @@ public class FileService {
         .path(fileName)
         .toUriString();
 
-    return new FileProcessingResponse(unprocessedFileName, fileDownloadUri, replacementList);
+    return new FileProcessingResponse(fileName, fileDownloadUri, replacementList);
   }
 
   private void validateFile(MultipartFile file) {
