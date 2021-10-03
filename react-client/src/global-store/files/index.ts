@@ -14,6 +14,7 @@ export interface FilesStore {
   modifyRule: (index: number, newRule: RuleDTO) => void;
   deleteRule: (index: number) => void;
   addRule: (newRule: RuleDTO) => void;
+  clear: () => void;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -86,5 +87,15 @@ export const createFilesStore = (set, _): FilesStore => ({
     }));
 
     window.open(response.fileDownloadUri, '_blank');
+  },
+  clear: () => {
+    set(() => {
+      return {
+        documentUrl: null,
+        documentName: null,
+        finalDocumentUrl: null,
+        rules: null,
+      };
+    });
   },
 });

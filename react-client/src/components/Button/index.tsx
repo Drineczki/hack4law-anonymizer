@@ -18,6 +18,11 @@ export const NavButton = styled(Button)`
   margin: 0.5rem 0;
   color: #9192a3;
 
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
   &:hover {
     color: #777df2;
   }

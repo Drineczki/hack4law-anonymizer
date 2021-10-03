@@ -9,7 +9,7 @@ export const Container = styled(Button)<{ isDanger?: boolean; color?: string }>`
   justify-content: center;
   align-items: center;
   background: ${({ theme, color, isDanger }) =>
-    color ? color : isDanger ? theme.colors.accent1 : theme.colors.primary};
+    color ? color : isDanger ? theme.colors.danger : theme.colors.primary};
   color: ${({ theme }) => theme.colors.white};
   transition: all 0.2s ease-in-out;
 

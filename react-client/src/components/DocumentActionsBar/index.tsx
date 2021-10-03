@@ -9,7 +9,7 @@ export const DocumentActionsBar: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const documentTitle = useStore((state) => state.documentName);
-  const documentUrl = useStore((state) => state.documentUrl);
+  const clear = useStore((state) => state.clear);
   const updateReplacements = useStore((state) => state.uploadChanges);
   const download = useStore((state) => state.uploadChangesFinally);
   const replacements = useStore((state) => state.rules);
@@ -30,6 +30,7 @@ export const DocumentActionsBar: React.FC = () => {
                   setIsLoading(false);
                 }
               }}
+              color={COLORS.accent1}
             />
           </Box>
         )}
@@ -53,7 +54,7 @@ export const DocumentActionsBar: React.FC = () => {
           </Box>
         )}
         <Box marginLeft="1rem" transform="translateY(-20%)">
-          <IconButton icon="trash" color={COLORS.accent2} onClick={() => console.log('will close')} isDanger />
+          <IconButton icon="trash" onClick={() => clear()} isDanger />
         </Box>
       </FlexBox>
       {isLoading && <GlobalLoader />}

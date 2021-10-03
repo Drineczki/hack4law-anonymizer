@@ -9,7 +9,6 @@ import {
   getNoFilesRoute,
 } from '~/constants/routes';
 import DashboardHomeView from './home';
-import DocumentUploadView from './document-upload';
 import AnonymizerView from './anonymizer';
 import NoFileView from './noFile';
 
@@ -17,11 +16,8 @@ export const DashboardRoutes: React.FC = () => {
   return (
     <DashboardLayout>
       <Switch>
-        <Route path={getDashboardHomeRoute()}>
-          <DashboardHomeView />
-        </Route>
-        <Route path={getDocumentUploadRoute()}>
-          <DocumentUploadView />
+        <Route path={getDashboardHomeRoute()} exact>
+          <Redirect to={getNoFilesRoute()} />
         </Route>
         <Route path={getAnonymizerRoute()}>
           <AnonymizerView />
@@ -30,8 +26,8 @@ export const DashboardRoutes: React.FC = () => {
           <NoFileView />
         </Route>
 
-        <Route path={getDashboardRoute()}>
-          <Redirect to={getDashboardHomeRoute()} />
+        <Route>
+          <Redirect to={getNoFilesRoute()} />
         </Route>
       </Switch>
     </DashboardLayout>
