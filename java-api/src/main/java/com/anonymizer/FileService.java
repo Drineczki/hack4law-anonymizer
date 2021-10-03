@@ -1,13 +1,13 @@
 package com.anonymizer;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.List;
-
+import com.anonymizer.config.FileStorageProperties;
+import com.anonymizer.exception.FileProcessingException;
+import com.anonymizer.exception.MyFileNotFoundException;
+import com.anonymizer.integration.AnonymizeObject;
+import com.anonymizer.integration.PythonApiConnector;
+import com.anonymizer.model.FileProcessingResponse;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -17,15 +17,14 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.anonymizer.config.FileStorageProperties;
-import com.anonymizer.exception.FileProcessingException;
-import com.anonymizer.exception.MyFileNotFoundException;
-import com.anonymizer.integration.AnonymizeObject;
-import com.anonymizer.integration.PythonApiConnector;
-import com.anonymizer.model.FileProcessingResponse;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.Date;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -100,7 +99,8 @@ public class FileService {
   }
 
   public FileProcessingResponse changeReplacements(String fileName, List<AnonymizeObject> replacementList, Boolean accept) {
-    var storedFilePath = resolveFileNameInStorage(fileName);
+    var unprocessedFileName = fileName.replaceAll("processed-","");
+    var storedFilePath = resolveFileNameInStorage(unprocessedFileName);
 
     pdfService.replaceInOriginalFile(storedFilePath, resolveFileNameInStorage(fileName), replacementList, accept);
 
@@ -109,7 +109,7 @@ public class FileService {
         .path(fileName)
         .toUriString();
 
-    return new FileProcessingResponse(fileName, fileDownloadUri, replacementList);
+    return new FileProcessingResponse(unprocessedFileName, fileDownloadUri, replacementList);
   }
 
   private void validateFile(MultipartFile file) {

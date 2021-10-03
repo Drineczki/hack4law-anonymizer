@@ -59,7 +59,15 @@ export const createFilesStore = (set, _): FilesStore => ({
     });
   },
   uploadChanges: async (fileName, replacements, accept) => {
+    set(() => ({
+      documentUrl: 'wait',
+    }));
+
     const response = await uploadChanges(fileName, replacements, accept);
+
+    console.log(response.fileName);
+
+    console.log(response);
 
     set(() => ({
       documentUrl: response.fileDownloadUri,

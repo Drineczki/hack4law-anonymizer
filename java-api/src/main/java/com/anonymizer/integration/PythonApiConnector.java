@@ -1,21 +1,19 @@
 package com.anonymizer.integration;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
+import com.anonymizer.exception.FileProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import com.anonymizer.exception.FileProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -39,8 +37,11 @@ public class PythonApiConnector {
     String personResultAsJsonStr =
         restTemplate.postForObject(requestUrl, request, String.class);
     try {
-      return Arrays.stream(objectMapper.readValue(personResultAsJsonStr, AnonymizeObject[].class))
+      var list = Arrays.stream(objectMapper.readValue(personResultAsJsonStr, AnonymizeObject[].class))
           .collect(Collectors.toList());
+      log.info("Python response:");
+      list.forEach(elem -> log.info(elem.toString()));
+      return list;
     } catch (IOException ex) {
       throw new FileProcessingException("Could not parse response from Python API.");
     }
