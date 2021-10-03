@@ -1,4 +1,4 @@
-import { getDashboardHomeRoute, getAnonymizerRoute, getRootRoute } from '~/constants/routes';
+import { getDashboardHomeRoute, getAnonymizerRoute } from '~/constants/routes';
 import { SupportedIcon } from '../Icon';
 
 export const menu = [
@@ -13,11 +13,5 @@ export const menu = [
     icon: 'document' as SupportedIcon,
     text: 'Anonimizuj',
     path: getAnonymizerRoute
-  },
-  {
-    id: 3,
-    icon: 'settings' as SupportedIcon,
-    text: 'Ustawienia',
-    path: getRootRoute
-  },
+  }
 ];
