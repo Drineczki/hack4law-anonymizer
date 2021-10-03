@@ -17,8 +17,6 @@ import { useStore } from '~/global-store/hooks';
 // const MOCK_RULES = Array.from(Array(10).keys()).map(() => MOCK_RULE);
 
 export const AnonymizerView: React.FC = () => {
-  const { documentUrl, rules } = useStore((state) => state);
-
   return (
     <>
       <DashboardTitle>Anonimizacja dokumentu</DashboardTitle>
@@ -36,7 +34,7 @@ export const AnonymizerView: React.FC = () => {
           </TopBar>
           <Box marginBottom="2rem" />
 
-          {rules && <RulesCardList rules={rules} />}
+          <RulesCardList />
         </Box>
         <Box width="58%">
           <TopBar>
@@ -46,7 +44,7 @@ export const AnonymizerView: React.FC = () => {
               </Box>
             </FlexBox>
           </TopBar>
-          {documentUrl && <DocumentPreview documentTitle="Test dokument" documentUrl={documentUrl} />}
+          <DocumentPreview />
         </Box>
       </FlexBox>
     </>

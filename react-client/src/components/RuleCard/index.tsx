@@ -8,6 +8,7 @@ import RuleTypeLabel from '../RuleTypeLabel';
 import Text, { Heading5, Paragraph } from '../Text';
 import ConfirmDeleteButton from '../ConfirmDeleteButton';
 import RuleCardEditableField from '../RuleCardEditableField';
+import { useStore } from '~/global-store/hooks';
 
 enum CardField {
   OriginalValue,
@@ -18,14 +19,21 @@ interface Props {
   originalValue: string;
   replacement: string;
   type: RuleType;
+  index: number;
 }
 
-export const RuleCard: React.FC<Props> = ({ originalValue, replacement, type }) => {
+export const RuleCard: React.FC<Props> = ({ originalValue, replacement, type, index }) => {
   const [editedField, setEditedField] = useState<CardField | null>(null);
+
+  const { modifyRule, deleteRule } = useStore((state) => state);
 
   const onFieldChange = (field: CardField, value: string) => {
     setEditedField(null);
-    console.log(value);
+    modifyRule(index, {
+      entity: field === CardField.OriginalValue ? value : originalValue,
+      anonymization: field === CardField.Replacement ? value : replacement,
+      anon_type: type,
+    });
   };
 
   const { ref, inView } = useInView({
@@ -49,7 +57,7 @@ export const RuleCard: React.FC<Props> = ({ originalValue, replacement, type }) 
       >
         <FlexBox marginBottom="1.5rem" alignItems="center">
           <RuleTypeLabel type={type} />
-          <ConfirmDeleteButton onDelete={() => null} />
+          <ConfirmDeleteButton onDelete={() => deleteRule(index)} />
         </FlexBox>
         <FlexBox marginBottom="1.5rem">
           <Box width="50%">
@@ -78,7 +86,7 @@ export const RuleCard: React.FC<Props> = ({ originalValue, replacement, type }) 
             </Heading5>
           </Box>
           <FlexBox alignItems="center">
-            <Paragraph fontSize="1.1rem">
+            <Paragraph fontSize="1.1rem" style={{ maxWidth: '40%', wordWrap: 'break-word' }}>
               <Text textDecoration="line-through">{originalValue}</Text>
             </Paragraph>
             <Box paddingX="1.5rem">
@@ -86,7 +94,9 @@ export const RuleCard: React.FC<Props> = ({ originalValue, replacement, type }) 
                 &rarr;
               </Text>
             </Box>
-            <Paragraph fontSize="1.1rem">{replacement}</Paragraph>
+            <Paragraph fontSize="1.1rem" style={{ maxWidth: '40%', wordWrap: 'break-word' }}>
+              {replacement}
+            </Paragraph>
           </FlexBox>
         </Box>
       </Box>

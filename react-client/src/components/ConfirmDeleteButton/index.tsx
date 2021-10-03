@@ -35,7 +35,13 @@ export const ConfirmDeleteButton: React.FC<Props> = ({ onDelete }) => {
         opacity={isOpened ? 1 : 0}
         visibility={isOpened ? 'visible' : 'hidden'}
       >
-        <Button onClick={() => console.log('will delete')}>
+        <Button
+          onClick={() => {
+            if (!isOpened) return;
+            onDelete();
+            setIsOpened(false);
+          }}
+        >
           <Text color={COLORS.accent1}>Usuń</Text>
         </Button>
       </Box>

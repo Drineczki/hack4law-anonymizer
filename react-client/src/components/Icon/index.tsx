@@ -21,7 +21,7 @@ import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti';
 import { MdKeyboardBackspace } from 'react-icons/md';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import { FiEdit } from 'react-icons/fi';
-import { AiOutlineCheck } from 'react-icons/ai';
+import { AiOutlineCheck, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 
 import { IoMdAdd } from 'react-icons/io';
 import { Container } from './parts';
@@ -49,7 +49,9 @@ export type SupportedIcon =
   | 'trash'
   | 'add'
   | 'edit'
-  | 'accept';
+  | 'accept'
+  | 'minus'
+  | 'plus';
 
 export interface Props {
   icon: SupportedIcon;
@@ -106,6 +108,10 @@ export const Icon: React.FC<Props> = ({ icon, size, onClick }) => {
         return <FiEdit />;
       case 'accept':
         return <AiOutlineCheck />;
+      case 'minus':
+        return <AiOutlineMinus />;
+      case 'plus':
+        return <AiOutlinePlus />;
     }
   };
   return (

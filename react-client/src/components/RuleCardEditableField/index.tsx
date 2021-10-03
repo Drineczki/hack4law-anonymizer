@@ -36,7 +36,9 @@ export const RuleCardEditableField: React.FC<Props> = ({ value, label, onConfirm
             }}
           />
         ) : (
-          <Paragraph fontSize="1.1rem">{value}</Paragraph>
+          <Paragraph fontSize="1.1rem" style={{ maxWidth: '80%', wordWrap: 'break-word' }}>
+            {value}
+          </Paragraph>
         )}
         <Box marginLeft="auto" marginRight="2rem">
           <EditButton onClick={isEdited ? () => onConfirmEdit && onConfirmEdit(fieldValue) : onEdit}>
