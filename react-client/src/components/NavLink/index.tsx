@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router';
-import {Center, FlexBox} from '../Box';
+import Box, {Center, FlexBox} from '../Box';
+import Button, { NavButton } from '../Button';
 import Icon, { SupportedIcon } from '../Icon';
 
 interface Props {
@@ -16,12 +17,14 @@ const NavLink: React.FC<Props> = ({icon, text, path}) => {
     history.push(path());
   };
   return (
-    <button onClick={onClick}>
+    <NavButton onClick={onClick}>
       <FlexBox alignItems="center">
-      <Icon icon={icon}/>
+        <Box marginRight="1rem">
+        <Icon icon={icon}/>
+      </Box>
       {text}
       </FlexBox>
-    </button>
+    </NavButton>
   );
 };
 

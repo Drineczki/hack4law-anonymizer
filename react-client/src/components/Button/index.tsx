@@ -12,3 +12,14 @@ const Button = styled.button`
 `;
 
 export default Button;
+
+export const NavButton = styled(Button)`
+  width: 100%;
+  margin: .5rem 0;
+  color: #9192a3;
+
+  &:hover {
+    color: #777DF2;
+  }
+}
+`;
