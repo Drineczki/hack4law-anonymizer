@@ -6,12 +6,10 @@ import { menu } from './data';
 
 const NavMenu: React.FC = () => {
   return (
-    <FlexCol margin="2rem 0" width="60%">
-      {menu.map(option => {
-        const {id, icon, text, path} = option;
-        return (
-          <NavLink key={id} icon={icon} text={text} path={path}/>
-        );
+    <FlexCol margin="2rem 0" width="80%">
+      {menu.map((option) => {
+        const { id, icon, text, path } = option;
+        return <NavLink key={id} icon={icon} text={text} path={path} />;
       })}
     </FlexCol>
   );

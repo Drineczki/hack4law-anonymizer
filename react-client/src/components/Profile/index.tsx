@@ -1,16 +1,12 @@
 import React from 'react';
 import ProfilePicture from '../ProfilePircture';
-import picture from '~/assets/images/avatar.png';
 import Box from '../Box';
 
 const Profile: React.FC = () => {
-
   return (
-    <Box flexDirection="column" justifyContent="center" textAlign="center" margin="1.5rem 0">
-      <ProfilePicture picture={picture}/>
-      <h5>
-        Adam Kowalski
-      </h5>
+    <Box flexDirection="column" justifyContent="center" textAlign="center" margin="0.5rem 0 2rem">
+      <ProfilePicture />
+      <h5>Anonymizer</h5>
     </Box>
   );
 };
