@@ -8,7 +8,7 @@ import TopBar from '~/components/TopBar';
 import DocumentPreview from '~/components/DocumentPreview';
 import { useStore } from '~/global-store/hooks';
 import { useHistory } from 'react-router-dom';
-import { getDashboardHomeRoute } from '~/constants/routes';
+import { getDashboardHomeRoute, getNoFilesRoute } from '~/constants/routes';
 import { ModalType } from '~/components/Modal/types';
 import { COLORS } from '~/styles/theme';
 import DocumentActionsBar from '~/components/DocumentActionsBar';
@@ -28,7 +28,7 @@ export const AnonymizerView: React.FC = () => {
   const history = useHistory();
 
   useEffect(() => {
-    if (!documentUrl) history.push(getDashboardHomeRoute());
+    if (!documentUrl) history.push(getNoFilesRoute());
   }, [documentUrl]);
 
   return (
