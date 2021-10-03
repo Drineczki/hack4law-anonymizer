@@ -6,7 +6,7 @@ import { menu } from './data';
 
 const NavMenu: React.FC = () => {
   return (
-    <FlexCol>
+    <FlexCol margin="2rem 0" width="60%">
       {menu.map(option => {
         const {id, icon, text, path} = option;
         return (
