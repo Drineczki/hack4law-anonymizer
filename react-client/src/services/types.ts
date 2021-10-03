@@ -17,3 +17,18 @@ const RuleToStringMap = {
 export const mapRuleTypeToString = (type: RuleType) => {
   return RuleToStringMap[type];
 };
+
+export const mapStringToRule= (value: any) => {
+  switch(value) {
+    case 'internet':
+      return RuleType.Internet;
+    case 'numerical':
+      return RuleType.Numerical;
+    case 'place':
+      return RuleType.Place;
+    case 'geoloc':
+      return RuleType.GeoLoc;
+    case 'pers':
+      return RuleType.Personal;
+  }
+};

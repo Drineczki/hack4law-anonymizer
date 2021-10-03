@@ -5,8 +5,9 @@ import ModalWrapper from '../ModalWrapper';
 import { MODAL_HORIZONTAL_PADDING, MODAL_VERTICAL_PADDING } from '../parts';
 import ActionButton from '~/components/ActionButton';
 import { useStore } from '~/global-store/hooks';
-import { RuleType } from '~/services/types';
+import { RuleType, mapRuleTypeToString, mapStringToRule } from '~/services/types';
 import TextInput from '~/components/TextInput';
+import SelectInput from '~/components/SelectInput';
 
 interface Props {
   onClose?: () => void;
@@ -15,15 +16,17 @@ interface Props {
 export const AddRuleModal: React.FC<Props> = ({ onClose }) => {
   const [entity, setEntity] = useState<string>('');
   const [replacement, setReplacement] = useState<string>('');
-  const [type, setType] = useState<RuleType>();
+  const [type, setType] = useState<RuleType>(RuleType.Personal);
 
   const addRule = useStore((state) => state.addRule);
+
+  console.log(type);
 
   const onAdd = () => {
     addRule({
       entity,
       anonymization: replacement,
-      anon_type: type ?? RuleType.Personal,
+      anon_type: type,
     });
     onClose && onClose();
   };
@@ -31,6 +34,11 @@ export const AddRuleModal: React.FC<Props> = ({ onClose }) => {
   return (
     <ModalWrapper title="Dodaj nową regułę anonimizacji" onClose={onClose}>
       <Box paddingX={MODAL_HORIZONTAL_PADDING} paddingY="2rem">
+        <SelectInput
+          label="Typ danej do anonimizacji"
+          value={mapRuleTypeToString(type)}
+          onChange={(e) => setType(RuleType.Personal)}
+        />
         <TextInput
           label="Fraza do anonimizacji"
           value={entity}
