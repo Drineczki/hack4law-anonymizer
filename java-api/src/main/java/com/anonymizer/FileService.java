@@ -1,13 +1,13 @@
 package com.anonymizer;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.List;
-
+import com.anonymizer.config.FileStorageProperties;
+import com.anonymizer.exception.FileProcessingException;
+import com.anonymizer.exception.MyFileNotFoundException;
+import com.anonymizer.integration.AnonymizeObject;
+import com.anonymizer.integration.PythonApiConnector;
+import com.anonymizer.model.FileProcessingResponse;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -17,15 +17,13 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.anonymizer.config.FileStorageProperties;
-import com.anonymizer.exception.FileProcessingException;
-import com.anonymizer.exception.MyFileNotFoundException;
-import com.anonymizer.integration.AnonymizeObject;
-import com.anonymizer.integration.PythonApiConnector;
-import com.anonymizer.model.FileProcessingResponse;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.List;
 
 @Slf4j
 @Service

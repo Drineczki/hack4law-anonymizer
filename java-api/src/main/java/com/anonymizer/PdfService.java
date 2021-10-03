@@ -1,12 +1,5 @@
 package com.anonymizer;
 
-import java.awt.*;
-import java.io.File;
-import java.util.List;
-import java.util.stream.StreamSupport;
-
-import org.springframework.stereotype.Service;
-
 import com.anonymizer.exception.FileProcessingException;
 import com.anonymizer.integration.AnonymizeObject;
 import com.anonymizer.model.AnonymizationType;
@@ -14,8 +7,13 @@ import com.spire.pdf.PdfDocument;
 import com.spire.pdf.PdfPageBase;
 import com.spire.pdf.exporting.text.SimpleTextExtractionStrategy;
 import com.spire.pdf.general.find.PdfTextFind;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import java.awt.*;
+import java.io.File;
+import java.util.List;
+import java.util.stream.StreamSupport;
 
 @Slf4j
 @Service
@@ -26,7 +24,7 @@ public class PdfService {
     pdfDocument.loadFromFile(inputFileUri);
 
     StreamSupport.stream(pdfDocument.getPages().spliterator(), false)
-            .forEach(page -> findAndReplace(page, replacementList, accept));
+        .forEach(page -> findAndReplace(page, replacementList, accept));
     deleteFile(outputFileUri);
     pdfDocument.saveToFile(outputFileUri);
   }
@@ -74,7 +72,7 @@ public class PdfService {
   private void deleteFile(String fileUri) {
     var file = new File(fileUri);
     if (file.delete()) {
-     log.info("Deleted the file: " + fileUri);
+      log.info("Deleted the file: " + fileUri);
     } else {
       log.error("Failed to delete file " + fileUri);
     }
