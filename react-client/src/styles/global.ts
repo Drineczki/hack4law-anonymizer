@@ -130,7 +130,7 @@ const defaultStylesReset = css`
   @keyframes fade-out-little {
     0% {
       visibility: visible;
-      opacity: 0.2;
+      opacity: 0.5;
     }
     99% {
       visibility: visible;
@@ -153,7 +153,7 @@ const defaultStylesReset = css`
     }
     100% {
       visibility: visible;
-      opacity: 0.3;
+      opacity: 0.5;
     }
   }
 
