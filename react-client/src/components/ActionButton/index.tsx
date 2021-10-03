@@ -4,7 +4,7 @@ import React from 'react';
 import Loader from '../Loader';
 
 const Container = styled(Button)`
-  padding: 0.5rem 2.5rem;
+  padding: 0.5rem 2rem;
   height: 50px;
   width: 130px;
   background: ${({ theme }) => theme.colors.primary};

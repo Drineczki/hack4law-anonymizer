@@ -17,6 +17,7 @@ import {
   PositionProps,
   space,
   SpaceProps,
+  style,
   system,
   textAlign,
   TextAlignProps,
@@ -68,6 +69,11 @@ export default Box;
 
 export const FlexBox = styled(Box)`
   display: flex;
+`;
+
+export const FlexCol = styled(Box)`
+  display: flex;
+  flex-direction: column;
 `;
 
 export const Center = styled(FlexBox)`
