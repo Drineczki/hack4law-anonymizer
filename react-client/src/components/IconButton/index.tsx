@@ -6,10 +6,11 @@ interface Props {
   icon: SupportedIcon;
   onClick: () => void;
   isDanger?: boolean;
+  color?: string;
 }
-export const IconButton: React.FC<Props> = ({ icon, onClick, isDanger }) => {
+export const IconButton: React.FC<Props> = ({ icon, onClick, isDanger, color }) => {
   return (
-    <Container onClick={onClick} isDanger={isDanger}>
+    <Container onClick={onClick} isDanger={isDanger} color={color}>
       <Icon icon={icon} size={16} />
     </Container>
   );

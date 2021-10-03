@@ -1,4 +1,4 @@
-import { uploadDocument } from './../../services/DocumentService';
+import { uploadDocument, uploadChanges } from './../../services/DocumentService';
 import { RuleDTO } from './../../dtos/rule-dto';
 
 export interface FilesStore {
@@ -7,6 +7,8 @@ export interface FilesStore {
   rules: RuleDTO[] | null;
 
   processFile: (file: File) => Promise<void>;
+  uploadChanges: (fileName: string, replacements: RuleDTO[], accept?: boolean) => Promise<void>;
+
   modifyRule: (index: number, newRule: RuleDTO) => void;
   deleteRule: (index: number) => void;
   addRule: (newRule: RuleDTO) => void;
@@ -55,5 +57,14 @@ export const createFilesStore = (set, _): FilesStore => ({
         rules: newRules,
       };
     });
+  },
+  uploadChanges: async (fileName, replacements, accept) => {
+    const response = await uploadChanges(fileName, replacements, accept);
+
+    set(() => ({
+      documentUrl: response.fileDownloadUri,
+      documentName: response.fileName,
+      rules: response.replacements,
+    }));
   },
 });
