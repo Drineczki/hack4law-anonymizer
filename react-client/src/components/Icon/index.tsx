@@ -19,11 +19,12 @@ import {
 } from 'react-icons/ri';
 import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti';
 import { MdKeyboardBackspace } from 'react-icons/md';
-import { FaRegTrashAlt } from 'react-icons/fa';
 import { FiEdit } from 'react-icons/fi';
 import { AiOutlineCheck, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 
+import { FaRegTrashAlt, FaHome } from 'react-icons/fa';
 import { IoMdAdd } from 'react-icons/io';
+import { IoDocumentText } from 'react-icons/io5';
 import { Container } from './parts';
 
 export type SupportedIcon =
@@ -51,7 +52,9 @@ export type SupportedIcon =
   | 'edit'
   | 'accept'
   | 'minus'
-  | 'plus';
+  | 'plus'
+  | 'home'
+  | 'document';
 
 export interface Props {
   icon: SupportedIcon;
@@ -112,6 +115,10 @@ export const Icon: React.FC<Props> = ({ icon, size, onClick }) => {
         return <AiOutlineMinus />;
       case 'plus':
         return <AiOutlinePlus />;
+      case 'home':
+        return <FaHome />;
+      case 'document':
+        return <IoDocumentText />;
     }
   };
   return (
