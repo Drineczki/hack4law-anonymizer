@@ -1,4 +1,4 @@
-package com.anonymizer;
+package com.anonymizer.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

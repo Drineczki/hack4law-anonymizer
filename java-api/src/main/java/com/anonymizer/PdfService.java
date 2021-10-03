@@ -1,103 +1,34 @@
 package com.anonymizer;
 
+import java.awt.*;
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.springframework.stereotype.Service;
 
+import com.anonymizer.exception.FileProcessingException;
 import com.anonymizer.integration.AnonymizeObject;
+import com.anonymizer.model.AnonymizationType;
 import com.spire.pdf.PdfDocument;
 import com.spire.pdf.PdfPageBase;
 import com.spire.pdf.exporting.text.SimpleTextExtractionStrategy;
 import com.spire.pdf.general.find.PdfTextFind;
 
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
 public class PdfService {
 
-  public void test() {
-    var classLoader = this.getClass().getClassLoader();
-    try {
-      var fileName = classLoader.getResource("pdf/test.PDF").getFile();
-      var outputFile =  "src/test/resources/out.PDF";
-      var out = new File(classLoader.getResource(".").getFile() + "/out.PDF");
-      if (out.createNewFile()) {
-        System.out.println("File is created!");
-      } else {
-        System.out.println("File already exists.");
-      }
-      convert(fileName, out.getPath());
-    } catch (IOException e) {
-      log.error("Witam żegnam");
-    }
-
-  }
-
-  public void replaceInOriginalFile(String inputFileUri, String outputFileUri, List<AnonymizeObject> replacementList) {
+  public void replaceInOriginalFile(String inputFileUri, String outputFileUri, List<AnonymizeObject> replacementList, Boolean accept) {
     var pdfDocument = new PdfDocument();
     pdfDocument.loadFromFile(inputFileUri);
 
     StreamSupport.stream(pdfDocument.getPages().spliterator(), false)
-            .forEach(page -> findAndReplace(page, replacementList));
-
-//    for (Object page : pdfDocument.getPages()) {
-//
-//      PdfPageBase pageBase = (PdfPageBase) page;
-//      String pattern = "Komornik";
-//      results = pageBase.findText(pattern).getFinds();
-//      for (PdfTextFind find : results) {
-//        var text = "K";
-//        find.applyRecoverString(text);
-//      }
-//    }
+            .forEach(page -> findAndReplace(page, replacementList, accept));
+    deleteFile(outputFileUri);
     pdfDocument.saveToFile(outputFileUri);
-  }
-
-  private void findAndReplace(Object page, List<AnonymizeObject> replacementList) {
-    var pageBase = (PdfPageBase) page;
-    replacementList.forEach(replacement -> {
-      find(replacement, pageBase)
-          .forEach(find -> replace(find, replacement.getAnonymization()));
-    });
-  }
-
-  private List<PdfTextFind> find(AnonymizeObject replacement, PdfPageBase pageBase) {
-    return List.of(pageBase.findText(replacement.getEntity()).getFinds());
-  }
-
-  private void replace(PdfTextFind find, String newValue) {
-    try {
-      find.applyRecoverString(newValue);
-    } catch (Exception e) {
-      throw new FileStorageException("Could not replace value in PDF.");
-    }
-  }
-
-  @SneakyThrows
-  public void convert(String input, String output) {
-    PdfDocument pdf = new PdfDocument();
-
-    pdf.loadFromFile(input);
-
-    PdfTextFind[] results;
-
-    for (Object page : (Iterable) pdf.getPages()) {
-
-      PdfPageBase pageBase = (PdfPageBase) page;
-      String pattern = "Komornik";
-      results = pageBase.findText(pattern).getFinds();
-      for (PdfTextFind find : results) {
-        var text = "K";
-        find.applyRecoverString(text);
-      }
-    }
-    pdf.saveToFile(output);
   }
 
   public String getAsText(String pdfFile) {
@@ -115,4 +46,37 @@ public class PdfService {
     return sb.toString();
   }
 
+  private void findAndReplace(Object page, List<AnonymizeObject> replacementList, final Boolean accept) {
+    var pageBase = (PdfPageBase) page;
+    replacementList.forEach(replacement -> {
+      findForPage(replacement, pageBase)
+          .forEach(find -> replace(find, replacement.getAnonymization(), accept, replacement.getAnonType()));
+    });
+  }
+
+  private List<PdfTextFind> findForPage(AnonymizeObject replacement, PdfPageBase pageBase) {
+    return List.of(pageBase.findText(replacement.getEntity()).getFinds());
+  }
+
+  private void replace(PdfTextFind find, String newValue, Boolean accept, String anonymizationType) {
+    try {
+      var color = new Color(AnonymizationType.of(anonymizationType).getColor());
+      if (accept) {
+        find.applyRecoverString(newValue, new Color(0xfcfcfc), true);
+      } else {
+        find.applyRecoverString(newValue, color, true);
+      }
+    } catch (Exception e) {
+      throw new FileProcessingException("Could not replace value in PDF.");
+    }
+  }
+
+  private void deleteFile(String fileUri) {
+    var file = new File(fileUri);
+    if (file.delete()) {
+     log.info("Deleted the file: " + fileUri);
+    } else {
+      log.error("Failed to delete file " + fileUri);
+    }
+  }
 }

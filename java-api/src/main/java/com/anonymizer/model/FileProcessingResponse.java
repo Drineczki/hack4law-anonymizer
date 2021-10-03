@@ -1,4 +1,4 @@
-package com.anonymizer;
+package com.anonymizer.model;
 
 import java.util.List;
 
@@ -14,6 +14,5 @@ import lombok.NoArgsConstructor;
 public class FileProcessingResponse {
     private String fileName;
     private String fileDownloadUri;
-    private long size;
     private List<AnonymizeObject> replacements;
 }
