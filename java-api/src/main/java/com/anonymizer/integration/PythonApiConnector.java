@@ -11,8 +11,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.anonymizer.FileStorageException;
-import com.fasterxml.jackson.databind.JsonNode;
+import com.anonymizer.exception.FileProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -43,7 +42,7 @@ public class PythonApiConnector {
       return Arrays.stream(objectMapper.readValue(personResultAsJsonStr, AnonymizeObject[].class))
           .collect(Collectors.toList());
     } catch (IOException ex) {
-      throw new FileStorageException("Przykro mi ");
+      throw new FileProcessingException("Could not parse response from Python API.");
     }
   }
 }
