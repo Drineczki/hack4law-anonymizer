@@ -1,5 +1,6 @@
 export enum ModalType {
   uploadFile,
+  addRule,
 }
 
 export interface IModalArgs {
