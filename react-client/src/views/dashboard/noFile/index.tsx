@@ -13,7 +13,7 @@ export const NoFileView: React.FC = () => {
 
   return (
     <Center height="100%" flexDirection="column" flexShrink={1}>
-      <h3 style={{ marginBottom: '1rem' }}>Wyślij plik PDF aby zacząć proces anonimizacji! 😀 </h3>
+      <h3 style={{ marginBottom: '1rem' }}>Wyślij plik PDF aby rozpocząć proces anonimizacji! 😀 </h3>
       <StyledButton onClick={onClick}>Kliknij tutaj aby wysłać plik</StyledButton>
     </Center>
   );
