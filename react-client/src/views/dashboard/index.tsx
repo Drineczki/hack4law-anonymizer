@@ -6,10 +6,12 @@ import {
   getDashboardHomeRoute,
   getDashboardRoute,
   getDocumentUploadRoute,
+  getNoFilesRoute,
 } from '~/constants/routes';
 import DashboardHomeView from './home';
 import DocumentUploadView from './document-upload';
 import AnonymizerView from './anonymizer';
+import NoFileView from './noFile';
 
 export const DashboardRoutes: React.FC = () => {
   return (
@@ -23,6 +25,9 @@ export const DashboardRoutes: React.FC = () => {
         </Route>
         <Route path={getAnonymizerRoute()}>
           <AnonymizerView />
+        </Route>
+        <Route path={getNoFilesRoute()}>
+          <NoFileView />
         </Route>
 
         <Route path={getDashboardRoute()}>
