@@ -37,8 +37,11 @@ public class PythonApiConnector {
     String personResultAsJsonStr =
         restTemplate.postForObject(requestUrl, request, String.class);
     try {
-      return Arrays.stream(objectMapper.readValue(personResultAsJsonStr, AnonymizeObject[].class))
+      var list = Arrays.stream(objectMapper.readValue(personResultAsJsonStr, AnonymizeObject[].class))
           .collect(Collectors.toList());
+      log.info("Python response:");
+      list.forEach(elem -> log.info(elem.toString()));
+      return list;
     } catch (IOException ex) {
       throw new FileProcessingException("Could not parse response from Python API.");
     }
