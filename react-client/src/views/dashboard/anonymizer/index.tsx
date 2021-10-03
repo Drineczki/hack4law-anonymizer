@@ -11,6 +11,7 @@ import { useHistory } from 'react-router-dom';
 import { getDashboardHomeRoute } from '~/constants/routes';
 import { ModalType } from '~/components/Modal/types';
 import { COLORS } from '~/styles/theme';
+import DocumentActionsBar from '~/components/DocumentActionsBar';
 
 // const MOCK_RULE = {
 //   originalValue: 'Jan Kowalski',
@@ -51,14 +52,7 @@ export const AnonymizerView: React.FC = () => {
         </Box>
         <Box width="58%">
           <TopBar>
-            <FlexBox>
-              <Box marginLeft="auto" transform="translateY(-20%)">
-                <IconButton icon="refresh" color={COLORS.accent2} onClick={() => console.log('will close')} />
-              </Box>
-              <Box marginLeft="1rem" transform="translateY(-20%)">
-                <IconButton icon="trash" isDanger onClick={() => console.log('will close')} />
-              </Box>
-            </FlexBox>
+            <DocumentActionsBar />
           </TopBar>
           <DocumentPreview />
         </Box>

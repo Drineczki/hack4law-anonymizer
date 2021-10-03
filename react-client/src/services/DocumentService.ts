@@ -18,11 +18,10 @@ export const uploadChanges = async (
   replacements: RuleDTO[],
   accept?: boolean
 ): Promise<ProcessDTO> => {
-  const response = await RequestService.client.put(PATH, {
-    fileName,
-    replacementList: replacements,
-    accept,
-  });
+  const response = await RequestService.client.put(
+    'files/' + fileName + '?accept=' + (accept || false).toString(),
+    replacements
+  );
 
   return response.data;
 };
