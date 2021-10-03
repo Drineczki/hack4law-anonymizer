@@ -23,6 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -98,7 +99,8 @@ public class FileService {
   }
 
   public FileProcessingResponse changeReplacements(String fileName, List<AnonymizeObject> replacementList, Boolean accept) {
-    var storedFilePath = resolveFileNameInStorage(fileName);
+    var unprocessedFileName = fileName.replaceAll("processed-","");
+    var storedFilePath = resolveFileNameInStorage(unprocessedFileName);
 
     pdfService.replaceInOriginalFile(storedFilePath, resolveFileNameInStorage(fileName), replacementList, accept);
 
@@ -107,7 +109,7 @@ public class FileService {
         .path(fileName)
         .toUriString();
 
-    return new FileProcessingResponse(fileName, fileDownloadUri, replacementList);
+    return new FileProcessingResponse(unprocessedFileName, fileDownloadUri, replacementList);
   }
 
   private void validateFile(MultipartFile file) {
