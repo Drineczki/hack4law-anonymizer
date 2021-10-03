@@ -5,6 +5,7 @@ import com.anonymizer.model.FileProcessingResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,6 +30,7 @@ public class FileController {
   public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) {
     Resource resource = fileService.loadFileAsResource(fileName);
     return ResponseEntity.ok()
+        .contentType(MediaType.APPLICATION_PDF)
         .body(resource);
   }
 
