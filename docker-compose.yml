@@ -63,12 +63,12 @@ services:
     command: uvicorn main:app --port ${PYTHON_API_PORT} --host 0.0.0.0 --reload
 
   java-api:
-    restart: unless-stopped
+#    restart: unless-stopped
     build:
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
       context: './java-api'
-    volumes:
-      - ./java-api/build:/app
+#    volumes:
+#      - ./java-api/build:/app
     environment:
       - PG_USER=${PG_USER}
       - PG_PASSWORD=${PG_PASSWORD}
@@ -77,23 +77,24 @@ services:
       - PG_DATABASE=${PG_DATABASE}
       - API_PORT=${JAVA_API_PORT}
       - CHOKIDAR_USEPOLLING=true
+      - PYTHON_API_PORT=${PYTHON_API_PORT}
     ports:
       - '${JAVA_API_PORT}:${JAVA_API_PORT}'
-    depends_on:
-      - java-builder
-    command: java -cp "/app/classes/java/main:/app/dependencies/*:/app/resources/main" com.drineczki.demo.DemoApplication
+#    depends_on:
+#      - java-builder
+#    command: java -cp "/app/classes/java/main:/app/dependencies/*:/app/resources/main" com.anonymizer.AnonymizerApplication
 
-  java-builder:
-    image: gradle:jdk11
-    working_dir: /home/gradle/project
-    restart: on-failure
-    volumes:
-      - ./java-api/build:/home/gradle/project/build
-      - ./java-api/src:/home/gradle/project/src
-      - ./java-api/build.gradle:/home/gradle/project/build.gradle
-    environment:
-      - CHOKIDAR_USEPOLLING=true
-    command: gradle build -t -x test -x testClasses
+#  java-builder:
+#    image: gradle:jdk11
+#    working_dir: /home/gradle/project
+#    restart: on-failure
+#    volumes:
+#      - ./java-api/build:/home/gradle/project/build
+#      - ./java-api/src:/home/gradle/project/src
+#      - ./java-api/build.gradle:/home/gradle/project/build.gradle
+#    environment:
+#      - CHOKIDAR_USEPOLLING=true
+#    command: gradle build -t -x test -x testClasses
 
   react-client:
     restart: unless-stopped

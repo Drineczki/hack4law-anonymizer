@@ -1,6 +1,7 @@
 import React from 'react';
 import { useStore } from '~/global-store/hooks';
 import AddFileModal from './AddFileModal';
+import AddRuleModal from './AddRuleModal';
 import { ModalType } from './types';
 
 export const ModalsContainer: React.FC = () => {
@@ -12,6 +13,8 @@ export const ModalsContainer: React.FC = () => {
     switch (openedModal) {
       case ModalType.uploadFile:
         return <AddFileModal onClose={() => closeModal()} />;
+      case ModalType.addRule:
+        return <AddRuleModal onClose={() => closeModal()} />;
 
       default:
         throw new Error('No such modal!');
