@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.anonymizer.integration.AnonymizeObject;
 import com.anonymizer.model.FileProcessingResponse;
@@ -26,7 +25,6 @@ import lombok.extern.slf4j.Slf4j;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/files")
-@CrossOrigin("*")
 @RequiredArgsConstructor
 public class FileController {
 
@@ -40,15 +38,12 @@ public class FileController {
   @GetMapping("/{fileName}")
   public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) {
     Resource resource = fileService.loadFileAsResource(fileName);
-    return ResponseEntity.ok()
-        .body(resource);
+    return ResponseEntity.ok().body(resource);
   }
 
   @PutMapping("/{fileName}")
-  public FileProcessingResponse changeReplacements(
-      @PathVariable String fileName,
-      @RequestBody List<AnonymizeObject> replacementList,
-      @RequestParam Boolean accept) {
+  public FileProcessingResponse changeReplacements(@PathVariable String fileName,
+      @RequestBody List<AnonymizeObject> replacementList, @RequestParam Boolean accept) {
     return fileService.changeReplacements(fileName, replacementList, accept);
   }
 }
