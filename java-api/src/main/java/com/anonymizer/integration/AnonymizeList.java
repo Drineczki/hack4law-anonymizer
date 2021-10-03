@@ -1,10 +1,10 @@
 package com.anonymizer.integration;
 
+import lombok.Data;
+
 import java.util.List;
 
-import lombok.Value;
-
-@Value
+@Data
 public class AnonymizeList {
   List<AnonymizeObject> values;
 }

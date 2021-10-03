@@ -4,6 +4,9 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 .gradle
+gradle/wrapper
+logs
+*.log
 
 ### STS ###
 .apt_generated

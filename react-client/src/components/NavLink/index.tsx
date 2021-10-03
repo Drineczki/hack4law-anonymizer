@@ -8,16 +8,17 @@ interface Props {
   icon: SupportedIcon;
   text: string;
   path: () => string;
+  disabled?: boolean;
 }
 
-const NavLink: React.FC<Props> = ({ icon, text, path }) => {
+const NavLink: React.FC<Props> = ({ icon, text, path, disabled }) => {
   const history = useHistory();
 
   const onClick = () => {
     history.push(path());
   };
   return (
-    <NavButton onClick={onClick}>
+    <NavButton onClick={onClick} disabled={disabled}>
       <FlexBox alignItems="center" width="100%">
         <Box marginRight="1rem" width="2rem">
           <Icon icon={icon} size={24} />

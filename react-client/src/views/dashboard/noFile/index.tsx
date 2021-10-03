@@ -1,27 +1,21 @@
 import React from 'react';
-import { useHistory } from 'react-router';
-import ActionButton from '~/components/ActionButton';
-import {
-  getDocumentUploadRoute
-} from '../../../constants/routes';
-import Box, { Center } from '~/components/Box';
-import Button from '~/components/Button';
+import { Center } from '~/components/Box';
 import { StyledButton } from './parts';
+import { useStore } from '~/global-store/hooks';
+import { ModalType } from '~/components/Modal/types';
 
 export const NoFileView: React.FC = () => {
-  
-  const history = useHistory();
+  const openModal = useStore((state) => state.openModal);
 
   const onClick = () => {
-    history.push(getDocumentUploadRoute());
+    openModal(ModalType.uploadFile);
   };
+
   return (
-      <Center height="100%" flexDirection="column" flexShrink={1}>
-        <h3>Wyglada na to ze nie zaladowales zadnego pliku 😞 </h3>
-        <StyledButton onClick={onClick}>
-          Kliknij tutaj aby zaladowac plik
-        </StyledButton>
-      </Center>
+    <Center height="100%" flexDirection="column" flexShrink={1}>
+      <h3 style={{ marginBottom: '1rem' }}>Wyślij plik PDF aby zacząć proces anonimizacji! 😀 </h3>
+      <StyledButton onClick={onClick}>Kliknij tutaj aby wysłać plik</StyledButton>
+    </Center>
   );
 };
 

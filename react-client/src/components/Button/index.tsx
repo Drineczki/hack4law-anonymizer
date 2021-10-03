@@ -15,8 +15,13 @@ export default Button;
 
 export const NavButton = styled(Button)`
   width: 100%;
-  margin: 1rem 0;
+  margin: 0.5rem 0;
   color: #9192a3;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
 
   &:hover {
     color: #777df2;

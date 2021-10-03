@@ -9,7 +9,7 @@ export const RulesCardList: React.FC = () => {
 
   if (!rules) {
     return (
-      <Center height="100%" padding="4rem" textAlign="center" opacity={0.6}>
+      <Center height="100%" padding="4rem" textAlign="center" opacity={0.6} maxHeight="500px">
         <Heading4 fontWeight={500}>Wystąpił problem z znalezieniem reguł do anonimizacji.</Heading4>
       </Center>
     );
@@ -17,7 +17,7 @@ export const RulesCardList: React.FC = () => {
 
   if (rules && !rules.length) {
     return (
-      <Center height="100%" padding="4rem" textAlign="center" opacity={0.6}>
+      <Center height="100%" padding="4rem" textAlign="center" opacity={0.6} maxHeight="500px">
         <Heading4 fontWeight={500}>Nie znaleziono żadnych reguł do anonimizacji.</Heading4>
       </Center>
     );

@@ -20,4 +20,9 @@ export const ActionButtonSmall = styled(Button)`
   align-items: center;
   justify-content: center;
   border-radius: 4px;
+  transition: all 0.2s;
+
+  &:hover {
+    opacity: 0.9;
+  }
 `;

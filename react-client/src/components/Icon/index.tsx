@@ -24,6 +24,7 @@ import { AiOutlineCheck, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 
 import { FaRegTrashAlt, FaHome } from 'react-icons/fa';
 import { IoMdAdd } from 'react-icons/io';
+import { MdRefresh } from 'react-icons/md';
 import { IoDocumentText } from 'react-icons/io5';
 import { Container } from './parts';
 
@@ -54,7 +55,8 @@ export type SupportedIcon =
   | 'minus'
   | 'plus'
   | 'home'
-  | 'document';
+  | 'document'
+  | 'refresh';
 
 export interface Props {
   icon: SupportedIcon;
@@ -120,6 +122,8 @@ export const Icon: React.FC<Props> = ({ icon, size, onClick, color }) => {
         return <FaHome />;
       case 'document':
         return <IoDocumentText />;
+      case 'refresh':
+        return <MdRefresh />;
     }
   };
   return (

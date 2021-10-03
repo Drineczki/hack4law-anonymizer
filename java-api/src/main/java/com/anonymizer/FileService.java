@@ -1,12 +1,13 @@
 package com.anonymizer;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-
+import com.anonymizer.config.FileStorageProperties;
+import com.anonymizer.exception.FileProcessingException;
+import com.anonymizer.exception.MyFileNotFoundException;
+import com.anonymizer.integration.AnonymizeObject;
+import com.anonymizer.integration.PythonApiConnector;
+import com.anonymizer.model.FileProcessingResponse;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -16,11 +17,14 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.anonymizer.integration.AnonymizeList;
-import com.anonymizer.integration.PythonApiConnector;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.Date;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -40,21 +44,19 @@ public class FileService {
     try {
       Files.createDirectories(this.fileStorageLocation);
     } catch (Exception ex) {
-      throw new FileStorageException("Could not create the directory where the uploaded files will be stored.", ex);
+      throw new FileProcessingException("Could not create the directory where the uploaded files will be stored.", ex);
     }
   }
 
   public String storeFile(MultipartFile file) {
     validateFile(file);
-    // Normalize file name
     String fileName = StringUtils.cleanPath(file.getOriginalFilename());
     try {
-      // Copy file to the target location (Replacing existing file with the same name)
       Path targetLocation = this.fileStorageLocation.resolve(fileName);
       Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
       return targetLocation.toString();
     } catch (IOException ex) {
-      throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
+      throw new FileProcessingException("Could not store file " + fileName, ex);
     }
   }
 
@@ -81,7 +83,7 @@ public class FileService {
 
     var responseList = pythonApiConnector.processFile(fileAsText);
 
-    pdfService.replaceInOriginalFile(storedFilePath, resolveFileName(outputFileName), responseList);
+    pdfService.replaceInOriginalFile(storedFilePath, resolveFileNameInStorage(outputFileName), responseList, false);
 
     var fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
         .path("/files/")
@@ -89,26 +91,36 @@ public class FileService {
         .toUriString();
 
 
-    return new FileProcessingResponse(outputFileName, fileDownloadUri, file.getSize(), responseList); // TODO
+    return new FileProcessingResponse(outputFileName, fileDownloadUri, responseList);
   }
 
-  public String resolveFileName(String fileName) {
+  public String resolveFileNameInStorage(String fileName) {
     return this.fileStorageLocation.resolve(fileName).toString();
   }
 
-  public FileProcessingResponse changeReplacements(String fileName, AnonymizeList replacementList) {
-    return new FileProcessingResponse();
+  public FileProcessingResponse changeReplacements(String fileName, List<AnonymizeObject> replacementList, Boolean accept) {
+    var unprocessedFileName = fileName.replaceAll("processed-","");
+    var storedFilePath = resolveFileNameInStorage(unprocessedFileName);
 
+    pdfService.replaceInOriginalFile(storedFilePath, resolveFileNameInStorage(fileName), replacementList, accept);
+
+    var fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+        .path("/files/")
+        .path(fileName)
+        .toUriString();
+
+    return new FileProcessingResponse(fileName, fileDownloadUri, replacementList);
   }
 
   private void validateFile(MultipartFile file) {
     var originalFilename = file.getOriginalFilename();
     if (originalFilename == null) {
-      throw new FileStorageException("Wrong file name.");
+      throw new FileProcessingException("Wrong file name.");
     }
+
     var extension = FilenameUtils.getExtension(originalFilename);
     if (!extension.equalsIgnoreCase("pdf")) {
-      throw new FileStorageException("Wrong file format. Only PDF files are supported.");
+      throw new FileProcessingException("Wrong file format. Only PDF files are supported.");
     }
   }
 }

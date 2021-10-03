@@ -10,6 +10,8 @@ import { useStore } from '~/global-store/hooks';
 import { useHistory } from 'react-router-dom';
 import { getDashboardHomeRoute, getNoFilesRoute } from '~/constants/routes';
 import { ModalType } from '~/components/Modal/types';
+import { COLORS } from '~/styles/theme';
+import DocumentActionsBar from '~/components/DocumentActionsBar';
 
 // const MOCK_RULE = {
 //   originalValue: 'Jan Kowalski',
@@ -50,11 +52,7 @@ export const AnonymizerView: React.FC = () => {
         </Box>
         <Box width="58%">
           <TopBar>
-            <FlexBox>
-              <Box marginLeft="auto" transform="translateY(-20%)">
-                <IconButton icon="trash" isDanger onClick={() => console.log('will close')} />
-              </Box>
-            </FlexBox>
+            <DocumentActionsBar />
           </TopBar>
           <DocumentPreview />
         </Box>
