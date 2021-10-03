@@ -51,15 +51,13 @@ public class FileService {
 
   public String storeFile(MultipartFile file) {
     validateFile(file);
-    // Normalize file name
     String fileName = StringUtils.cleanPath(file.getOriginalFilename());
     try {
-      // Copy file to the target location (Replacing existing file with the same name)
       Path targetLocation = this.fileStorageLocation.resolve(fileName);
       Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
       return targetLocation.toString();
     } catch (IOException ex) {
-      throw new FileProcessingException("Could not store file " + fileName + ". Please try again!", ex);
+      throw new FileProcessingException("Could not store file " + fileName, ex);
     }
   }
 
